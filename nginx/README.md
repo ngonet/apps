@@ -12,7 +12,7 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > deploym
 kubectl expose deploy nginx --port=80 --target-port=80 --dry-run=client -o yaml > service.yml
 ```
 
-## ingresrouter
+## ingressrouter
 
 ```yaml
 apiVersion: traefik.containo.us/v1alpha1
