@@ -150,7 +150,7 @@ kubectl expose deployment nginx --port=80 --target-port=8000
 
 Register the ``IngressRoute`` kind in the Kubernetes cluster before creating ``IngressRoute`` objects.
 
->IngressRoute Attributes
+#### IngressRoute Attributes
 
 ```yaml
 apiVersion: traefik.containo.us/v1alpha1
