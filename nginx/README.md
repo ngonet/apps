@@ -6,7 +6,7 @@
 kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > deployment.yaml
 ```
 
-## service
+## expose
 
 ```bash
 kubectl expose deploy nginx --port=80 --target-port=80 --dry-run=client -o yaml > service.yml
