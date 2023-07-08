@@ -14,6 +14,10 @@ kubectl expose deploy nginx --port=80 --target-port=80 --dry-run=client -o yaml 
 
 ## ingressrouter
 
+```bash
+export DOMAIN=example.com
+```
+
 ```yaml
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -25,7 +29,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`nginx.labngo`)
+      match: Host(`nginx.${DOMAIN}`)
       priority: 10
       services:
         - name: nginx
