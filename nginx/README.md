@@ -3,7 +3,7 @@
 ## deployment
 
 ```bash
-kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > deployment.yaml
+kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > deployment.yaml
 ```
 
 ## expose
