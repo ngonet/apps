@@ -6,11 +6,7 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  volumes:
-  - name: volv
-    persistentVolumeClaim:
-      claimName: local-volume-pvc
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -25,7 +21,4 @@ spec:
       - image: nginx
         name: nginx
         resources: {}
-      volumeMounts:
-      - name: volv
-        mountPath: /usr/share/nginx/html
 status: {}
