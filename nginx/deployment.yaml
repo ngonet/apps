@@ -21,4 +21,11 @@ spec:
       - image: nginx
         name: nginx
         resources: {}
+        volumeMounts:
+        - name: volv
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: volv
+        persistentVolumeClaim:
+          claimName: local-volume-pvc
 status: {}
