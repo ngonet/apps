@@ -6,15 +6,11 @@ metadata:
     app: nginx
   name: nginx
 spec:
-<<<<<<< HEAD
   volumes:
   - name: volv
     persistentVolumeClaim:
       claimName: local-volume-pvc
-  replicas: 1
-=======
   replicas: 3
->>>>>>> e172615f234795a52247624dd18cff2204fcc536
   selector:
     matchLabels:
       app: nginx
