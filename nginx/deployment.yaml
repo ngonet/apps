@@ -24,7 +24,15 @@ spec:
         volumeMounts:
         - name: volv
           mountPath: /usr/share/nginx/html
+        - name: nginx-cm
+          mountPath: /etc/nginx
       volumes:
+      - name: nginx-cm
+        configMap:
+          name: nginx-cm
+          items:
+            - key: nginx.conf
+              path: nginx.conf
       - name: volv
         persistentVolumeClaim:
           claimName: local-volume-pvc
