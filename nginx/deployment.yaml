@@ -30,9 +30,6 @@ spec:
       - name: nginx-cm
         configMap:
           name: nginx-cm
-          items:
-            - key: nginx.conf
-              path: nginx.conf
       - name: volv
         persistentVolumeClaim:
           claimName: local-volume-pvc
