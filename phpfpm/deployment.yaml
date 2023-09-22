@@ -22,7 +22,7 @@ spec:
         name: nginx
         resources: {}
         volumeMounts:
-        - name: html
+        - name: volv
           mountPath: /usr/share/nginx/html
         - name: nginx-cm
           mountPath: /etc/nginx/nginx.conf
@@ -32,7 +32,7 @@ spec:
       - name: nginx-cm
         configMap:
           name: nginx-cm
-      - name: html
+      - name: volv
         persistentVolumeClaim:
-          claimName: nginx-pvc
+          claimName: local-volume-pvc
 status: {}
