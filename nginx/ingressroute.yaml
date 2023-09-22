@@ -11,7 +11,7 @@ spec:
       match: Host(`nginx.labngo`)
       priority: 10
       services:
-        - name: nginx
+        - name: nginx-svc
           port: 80
   tls:
     certResolver: default
