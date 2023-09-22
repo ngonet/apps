@@ -24,12 +24,12 @@ spec:
         volumeMounts:
         - name: html
           mountPath: /usr/share/nginx/html
-        - name: nginx-cm
+        - name: config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
       volumes:
-      - name: nginx-cm
+      - name: config
         configMap:
           name: nginx-cm
       - name: html
