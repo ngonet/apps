@@ -25,8 +25,5 @@ data:
     \       }\n\n    }\n\n\n}\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-09-21T23:51:09Z"
   name: nginx-cm
   namespace: default
-  resourceVersion: "2123632"
-  uid: 69f4312e-a631-463e-8d87-64c24df266bd
