@@ -9,7 +9,7 @@ metadata:
   uid: 3c7a2807-b03d-4f9f-8a7e-958c6b868e34
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   storageClassName: local-path
   volumeName: pvc-3c7a2807-b03d-4f9f-8a7e-958c6b868e34
   resources:
