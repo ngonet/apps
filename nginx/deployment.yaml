@@ -1,28 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: nginx
+    tier: frontend
   name: nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: nginx
+      tier: frontend
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: nginx
+        tier: frontend
     spec:
       containers:
       - image: nginx
         name: nginx
         resources: {}
         volumeMounts:
-        - name: html
+        - name: contents
           mountPath: /usr/share/nginx/html
           readOnly: true
         - name: config
@@ -33,7 +34,7 @@ spec:
       - name: config
         configMap:
           name: nginx-cm
-      - name: html
+      - name: contents
         persistentVolumeClaim:
           claimName: nginx-pvc
 status: {}

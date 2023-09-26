@@ -5,13 +5,10 @@ metadata:
   namespace: default
   annotations:
     volumeType: local
-#  resourceVersion: "2153014"
-#  uid: 3c7a2807-b03d-4f9f-8a7e-958c6b868e34
 spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path
-#  volumeName: pvc-3c7a2807-b03d-4f9f-8a7e-958c6b868e34
   resources:
     requests:
       storage: 100Mi
