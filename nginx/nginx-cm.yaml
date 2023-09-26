@@ -19,7 +19,7 @@ data:
     Content-Security-Policy \"default-src 'self'; style-src 'self' 'unsafe-inline'
     https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src
     'self' data:;\";\n    \n        location / {\n            root   /usr/share/nginx/html;\n
-    \           index  index.html index.htm;\n        }\n\n        location ~ \\.php$
+    \           index  index.php index.html;\n        }\n\n        location ~ \\.php$
     {\n            fastcgi_pass   phpfpm-svc:9000;\n            fastcgi_index  index.php;\n
     \           fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;\n            include
     \       fastcgi_params;\n        }\n\n\terror_page   500 502 503 504  /50x.html;\n
