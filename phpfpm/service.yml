@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: phpfpm
+    tier: backend
   name: phpfpm-svc
 spec:
   ports:
-  - port: 80
+  - port: 9000
     protocol: TCP
-    targetPort: 80
   selector:
     app: phpfpm
-status:
-  loadBalancer: {}
+    tier: backend
