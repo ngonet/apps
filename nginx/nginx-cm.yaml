@@ -27,8 +27,5 @@ data:
     ~ /\\.ht {\n\t    deny  all;\n\t}\n\n    }\n\n}\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-09-26T23:26:08Z"
   name: nginx-cm
   namespace: default
-  resourceVersion: "2259772"
-  uid: 2266db18-0b22-45b0-9944-af3c993bae74
