@@ -20,15 +20,15 @@ data:
     https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src
     'self' data:;\";\n    \n        location / {\n            root   /usr/share/nginx/html;\n
     \           index  index.html index.htm;\n        }\n\n        location ~ \\.php$
-    {\n            fastcgi_pass   phpfpm:9000;\n            fastcgi_index  index.php;\n
+    {\n            fastcgi_pass   phpfpm-svc:9000;\n            fastcgi_index  index.php;\n
     \           fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;\n            include
     \       fastcgi_params;\n        }\n\n\terror_page   500 502 503 504  /50x.html;\n
     \       location = /50x.html {\n            root   /usr/share/nginx/html;\n        }\n\n\tlocation
     ~ /\\.ht {\n\t    deny  all;\n\t}\n\n    }\n\n}\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-09-26T18:42:51Z"
+  creationTimestamp: "2023-09-26T23:26:08Z"
   name: nginx-cm
   namespace: default
-  resourceVersion: "2253451"
-  uid: 22f1067b-80e1-4181-ac8b-48c63e070485
+  resourceVersion: "2259772"
+  uid: 2266db18-0b22-45b0-9944-af3c993bae74
