@@ -3,8 +3,8 @@ data:
   php.conf: "server {\n    listen       80;\n    listen  [::]:80;\n    server_name
     \ php.labngo;\n\n    add_header Content-Security-Policy \"default-src 'self' 'unsafe-inline'
     'unsafe-eval'; img-src 'self' data:;\";\n\n    #access_log  /var/log/nginx/host.access.log
-    \ main;\n\n    location / {\n        root   /var/www/html;\n        index  index.html
-    index.htm;\n    }\n\n    #error_page  404              /404.html;\n\n    # redirect
+    \ main;\n\n    location / {\n        root   /var/www/html;\n        index  index.php
+    index.html;\n    }\n\n    #error_page  404              /404.html;\n\n    # redirect
     server error pages to the static page /50x.html\n    #\n    error_page   500 502
     503 504  /50x.html;\n    location = /50x.html {\n        root   /usr/share/nginx/html;\n
     \   }\n\n    # proxy the PHP scripts to Apache listening on 127.0.0.1:80\n    #\n
