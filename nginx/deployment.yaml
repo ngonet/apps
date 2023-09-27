@@ -32,10 +32,17 @@ spec:
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
+        - name: default 
+          mountPath: /etc/nginx/conf.d/defaul.conf
+          subPath: default.conf
+          readOnly: true
       volumes:
       - name: config
         configMap:
           name: nginx-cm
+      - name: default
+        configMap:
+          name: nginx-default-cm
 #      - name: contents
 #        persistentVolumeClaim:
 #          claimName: nginx-pvc
