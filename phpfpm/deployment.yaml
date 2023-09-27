@@ -10,11 +10,13 @@ spec:
   selector:
     matchLabels:
       app: phpfpm
+      tier: backend
   strategy: {}
   template:
     metadata:
       labels:
         app: phpfpm
+        tier: backend
     spec:
       containers:
       - image: php:fpm-alpine
