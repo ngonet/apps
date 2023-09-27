@@ -24,7 +24,7 @@ spec:
         resources: {}
         volumeMounts:
         - name: contents
-          mountPath: /usr/share/nginx/html
+          mountPath: /var/www/html
           readOnly: true
         - name: config
           mountPath: /etc/nginx/nginx.conf
