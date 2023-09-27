@@ -19,6 +19,8 @@ spec:
       containers:
       - image: php:fpm-alpine
         name: phpfpm
+        ports:
+          - containerPort: 9000
         resources: {}
         volumeMounts:
         - name: contents
