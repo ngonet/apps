@@ -19,12 +19,12 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: alpine
+      - image: alpine:latest
         name: www
         resources: {}
         volumeMounts:
         - name: content
-          mountPath: /var/www/html
+          mountPath: /var/www/html/www
           readOnly: true
       volumes:
       - name: content
