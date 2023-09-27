@@ -15,7 +15,7 @@ data:
     \   access_log  /var/log/nginx/access.log  main;\n\n    sendfile        on;\n
     \   #tcp_nopush     on;\n\n    keepalive_timeout  65;\n\n    #gzip  on;\n\n    #
     \   include /etc/nginx/conf.d/*.conf;\n\n    server {\n        listen       80;\n
-    \       listen  [::]:80;\n        server_name  localhost;\n    \n        add_header
+    \       listen  [::]:80;\n#        server_name  localhost;\n    \n        add_header
     Content-Security-Policy \"default-src 'self'; style-src 'self' 'unsafe-inline'
     https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src
     'self' data:;\";\n    \n        location / {\n            root   /var/www/html;\n
