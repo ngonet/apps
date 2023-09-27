@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: web1-pvc
+  name: phpfpm-pvc
   namespace: default
   annotations:
     volumeType: local
