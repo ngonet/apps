@@ -11,7 +11,7 @@ spec:
       match: Host(`nginx.labngo`)
       priority: 10
       services:
-        - name: nginx-svc
-          port: 80
+        - name: phpfpm-svc
+          port: 9000
   tls:
     certResolver: default
