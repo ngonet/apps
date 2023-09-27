@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: www
+    tier: backend
+  name: www
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: www
+      tier: backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: wwww
+        tier: backend
+    spec:
+      containers:
+      - image: alpine
+        name: www
+        resources: {}
+        volumeMounts:
+        - name: content
+          mountPath: /var/www/html
+          readOnly: true
+      volumes:
+      - name: content
+        persistentVolumeClaim:
+          claimName: www-pvc
+status: {}
