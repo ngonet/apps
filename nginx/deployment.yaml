@@ -37,8 +37,8 @@ spec:
           subPath: default.conf
           readOnly: true
         - name: php 
-          mountPath: /etc/nginx/conf.d/php.conf
-          subPath: php.conf
+          mountPath: /etc/nginx/conf.d/phpfpm.conf
+          subPath: phpfpm.conf
           readOnly: true
       volumes:
       - name: config
@@ -52,5 +52,5 @@ spec:
           name: cm-nginx-phpfpm
       - name: contents
         persistentVolumeClaim:
-          claimName: nginx-pvc
+          claimName: phpfpm-pvc
 status: {}
