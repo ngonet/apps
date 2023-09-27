@@ -15,12 +15,12 @@ data:
     \   access_log  /var/log/nginx/access.log  main;\n\n    sendfile        on;\n
     \   #tcp_nopush     on;\n\n    keepalive_timeout  65;\n\n    #gzip  on;\n\n    #
     \   include /etc/nginx/conf.d/*.conf;\n\n    server {\n        listen       80;\n
-    \       listen  [::]:80;\n#        server_name  localhost;\n    \n        add_header
-    Content-Security-Policy \"default-src 'self'; style-src 'self' 'unsafe-inline'
-    https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src
-    'self' data:;\";\n    \n        location / {\n            root   /var/www/html;\n
-    \           index  index.php index.html;\n        }\n\n        location ~ \\.(php|phar)(/.*)?$
-    {\n\t    fastcgi_split_path_info ^(.+\\.(?:php|phar))(/.*)$;\n\t    fastcgi_intercept_errors
+    \       listen  [::]:80;\n        server_name _;\n    \n        add_header Content-Security-Policy
+    \"default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;\";\n    \n        location
+    / {\n            root   /var/www/html;\n            index  index.php index.html;\n
+    \       }\n\n        location ~ \\.(php|phar)(/.*)?$ {\n\t    root   /var/www/html;\n\t
+    \   fastcgi_split_path_info ^(.+\\.(?:php|phar))(/.*)$;\n\t    fastcgi_intercept_errors
     on;\n            fastcgi_pass   phpfpm-svc:9000;\n            fastcgi_index  index.php;\n\t
     \   fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;\n\t    fastcgi_param
     \ PATH_INFO $fastcgi_path_info;\n            include        fastcgi_params;\n
