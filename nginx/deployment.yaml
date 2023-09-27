@@ -24,18 +24,18 @@ spec:
         ports:
           - containerPort: 80
         resources: {}
-#        volumeMounts:
+        volumeMounts:
 #        - name: contents
 #          mountPath: /var/www/html
 #          readOnly: true
-#        - name: config
-#          mountPath: /etc/nginx/nginx.conf
-#          subPath: nginx.conf
-#          readOnly: true
-#      volumes:
-#      - name: config
-#        configMap:
-#          name: nginx-cm
+        - name: config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-cm
 #      - name: contents
 #        persistentVolumeClaim:
 #          claimName: nginx-pvc
