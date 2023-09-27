@@ -25,11 +25,11 @@ spec:
           - containerPort: 9000
         resources: {}
         volumeMounts:
-        - name: contents
+        - name: content
           mountPath: /var/www/html
           readOnly: true
       volumes:
-      - name: contents
+      - name: content
         persistentVolumeClaim:
           claimName: phpfpm-pvc
 status: {}
