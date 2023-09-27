@@ -51,5 +51,5 @@ data:
     }
 kind: ConfigMap
 metadata:
-  name: nginx-cm
+  name: cm-nginx
   namespace: default

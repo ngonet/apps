@@ -43,13 +43,13 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: nginx-cm
+          name: cm-nginx
       - name: default
         configMap:
-          name: nginx-default-cm
+          name: cm-nginx-default
       - name: php
         configMap:
-          name: nginx-php-cm
+          name: cm-nginx-phpfpm
       - name: contents
         persistentVolumeClaim:
           claimName: nginx-pvc
