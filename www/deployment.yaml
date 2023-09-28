@@ -32,7 +32,6 @@ spec:
           args:
             - --repo=https://github.com/ngonet/apps
             - --depth=1
-            - --period=60
             - --link=www/content
             - --root=/git
           volumeMounts:
