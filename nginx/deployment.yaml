@@ -40,7 +40,7 @@ spec:
 #          readOnly: true
         - name: content-www
           mountPath: /var/www/html
-          readOnly: true
+#          readOnly: true
         - name: config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
