@@ -28,9 +28,9 @@ spec:
         - name: content-phpfpm
           mountPath: /var/www/html/phpfpm
           readOnly: true
-        - name: content-www
-          mountPath: /var/www/html/www
-          readOnly: true
+#        - name: content-www
+#          mountPath: /var/www/html/www
+#          readOnly: true
         - name: config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
@@ -43,10 +43,10 @@ spec:
           mountPath: /etc/nginx/conf.d/phpfpm.conf
           subPath: phpfpm.conf
           readOnly: true
-        - name: conf-www 
-          mountPath: /etc/nginx/conf.d/www.conf
-          subPath: www.conf
-          readOnly: true
+#        - name: conf-www 
+#          mountPath: /etc/nginx/conf.d/www.conf
+#          subPath: www.conf
+#          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -57,13 +57,13 @@ spec:
       - name: conf-phpfpm
         configMap:
           name: cm-nginx-phpfpm
-      - name: conf-www
-        configMap:
-          name: cm-nginx-www
+#      - name: conf-www
+#        configMap:
+#          name: cm-nginx-www
       - name: content-phpfpm
         persistentVolumeClaim:
           claimName: phpfpm-pvc
-      - name: content-www
-        persistentVolumeClaim:
-          claimName: www-pvc
+#      - name: content-www
+#        persistentVolumeClaim:
+#          claimName: www-pvc
 status: {}
