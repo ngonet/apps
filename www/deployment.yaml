@@ -33,7 +33,7 @@ spec:
             - --repo=https://github.com/ngonet/apps.git
             - --ref=main
             - --depth=1
-            - --link=current
+#            - --link=current
             - --root=/git
           volumeMounts:
             - name: content-from-git
