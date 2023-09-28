@@ -32,7 +32,7 @@ spec:
           args:
             - --repo=https://github.com/ngonet/www.git
             - --ref=main
-            - --link=www
+#            - --link=www
             - --root=/git
           volumeMounts:
             - name: content-from-git
@@ -46,6 +46,6 @@ spec:
           image: alpine
           volumeMounts:
             - name: content-from-git
-              mountPath: /var/www/html
+              mountPath: /var/www/html/www
               readOnly: true # no need to ever write to the volume
 
