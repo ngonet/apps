@@ -3,14 +3,14 @@ data:
   phpfpm.conf: "server {\n    listen       80;\n    listen  [::]:80;\n    server_name
     \ php.labngo;\n\n    add_header Content-Security-Policy \"default-src 'self' 'unsafe-inline'
     'unsafe-eval'; img-src 'self' data:;\";\n\n    #access_log  /var/log/nginx/host.access.log
-    \ main;\n\n    location / {\n        root   /var/www/html;\n        index  index.php
+    \ main;\n\n    location / {\n        root   /var/www/html/phpfpm;\n        index  index.php
     index.html;\n    }\n\n    #error_page  404              /404.html;\n\n    # redirect
     server error pages to the static page /50x.html\n    #\n    error_page   500 502
     503 504  /50x.html;\n    location = /50x.html {\n        root   /usr/share/nginx/html;\n
     \   }\n\n    # proxy the PHP scripts to Apache listening on 127.0.0.1:80\n    #\n
     \   #location ~ \\.php$ {\n    #    proxy_pass   http://127.0.0.1;\n    #}\n\n
     \   # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000\n    #\n
-    \   location ~ \\.(php|phar)(/.*)?$ {\n\troot /var/www/html;\n        fastcgi_split_path_info
+    \   location ~ \\.(php|phar)(/.*)?$ {\n\troot /var/www/html/phpfpm;\n        fastcgi_split_path_info
     ^(.+\\.(?:php|phar))(/.*)$;\n        fastcgi_intercept_errors on;\n        fastcgi_index
     \ index.php;\n        include        fastcgi_params;\n        fastcgi_param  SCRIPT_FILENAME
     \ $document_root$fastcgi_script_name;\n        fastcgi_param  PATH_INFO $fastcgi_path_info;\n
