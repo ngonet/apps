@@ -24,7 +24,7 @@ spec:
         args:
           - --repo=https://github.com/ngonet/www.git
           - --ref=main
-#          - --link=www
+          - --link=www
           - --root=/git
         volumeMounts:
           - name: content-www
@@ -39,7 +39,7 @@ spec:
           mountPath: /var/www/html/phpfpm
           readOnly: true
         - name: content-www
-          mountPath: /var/www/html/www
+          mountPath: /var/www/html
           readOnly: true
         - name: config
           mountPath: /etc/nginx/nginx.conf
