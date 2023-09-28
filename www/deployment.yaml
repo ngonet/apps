@@ -31,6 +31,7 @@ spec:
           image: registry.k8s.io/git-sync/git-sync:v4.0.0
           args:
             - --repo=https://github.com/ngonet/apps
+            - --ref=main
             - --depth=1
             - --link=www/content
             - --root=/git
