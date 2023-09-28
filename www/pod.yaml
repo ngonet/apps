@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www 
+spec:
+  containers:
+  - name: www
+    image: alpine
+    volumeMounts:
+    - name: content
+      mountPath: /var/www/html/www
+      readOnly: true
+  volumes:
+  - name: content
+    persistentVolumeClaim:
+      claimName: www-pvc
