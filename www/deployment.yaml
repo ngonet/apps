@@ -21,6 +21,8 @@ spec:
       containers:
       - image: alpine
         name: www
+        ports:
+          - containerPort: 80
         resources: {}
         volumeMounts:
         - name: content
