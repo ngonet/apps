@@ -74,6 +74,7 @@ spec:
         persistentVolumeClaim:
           claimName: phpfpm-pvc
       - name: content-www
-        persistentVolumeClaim:
-          claimName: www-pvc
+        emptyDir: {}
+#        persistentVolumeClaim:
+#          claimName: www-pvc
 status: {}
