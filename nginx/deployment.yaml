@@ -39,7 +39,7 @@ spec:
         volumeMounts:
           - name: content-www
             mountPath: /git
-      - image: nginx:alpine
+      - image: nginx
         name: nginx
         ports:
           - containerPort: 80
