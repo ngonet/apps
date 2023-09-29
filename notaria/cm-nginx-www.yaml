@@ -11,7 +11,7 @@ data:
         #access_log  /var/log/nginx/host.access.log  main;
 
         location / {
-            root   /var/www/html/notaria;
+            root   /var/www/html/html.git/notaria;
             index  index.html index.htm;
         }
 
