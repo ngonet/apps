@@ -19,7 +19,17 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: git-sync
+      - name: git-sync-noraia
+        image: registry.k8s.io/git-sync/git-sync:v4.0.0
+        args:
+          - --repo=https://github.com/ngonet/notaria.git
+          - --ref=main
+          - --link=notaria
+          - --root=/git
+        volumeMounts:
+          - name: content-notaria
+            mountPath: /git
+      - name: git-sync-www
         image: registry.k8s.io/git-sync/git-sync:v4.0.0
         args:
           - --repo=https://github.com/ngonet/www.git
@@ -37,10 +47,10 @@ spec:
         volumeMounts:
         - name: content-phpfpm
           mountPath: /var/www/html/phpfpm
-#          readOnly: true
         - name: content-www
           mountPath: /var/www/html
-#          readOnly: true
+        - name: content-notaria
+          mountPath: /var/www/html
         - name: config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
@@ -75,6 +85,6 @@ spec:
           claimName: phpfpm-pvc
       - name: content-www
         emptyDir: {}
-#        persistentVolumeClaim:
-#          claimName: www-pvc
+      - name: content-notaria
+        emptyDir: {}
 status: {}
