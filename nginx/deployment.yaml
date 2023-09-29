@@ -84,6 +84,9 @@ spec:
       - name: conf-www
         configMap:
           name: cm-nginx-www
+      - name: conf-notaria
+        configMap:
+          name: cm-nginx-notaria
       - name: content-phpfpm
         persistentVolumeClaim:
           claimName: phpfpm-pvc
