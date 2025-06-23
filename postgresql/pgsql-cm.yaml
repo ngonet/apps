@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgsql-cm
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: sch-db
+  POSTGRES_USER: sch-user
