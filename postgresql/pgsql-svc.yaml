@@ -4,10 +4,12 @@ metadata:
   name: pgsql-svc
   labels:
     app: postgres
+    tier: database
 spec:
   type: ClusterIP
   selector:
     app: postgres
+    tier: database
   ports:
     - port: 5432
       targetPort: 5432

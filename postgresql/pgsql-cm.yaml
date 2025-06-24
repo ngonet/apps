@@ -4,6 +4,7 @@ metadata:
   name: pgsql-cm
   labels:
     app: postgres
+    tier: database
 data:
   POSTGRES_DB: sch-db
   POSTGRES_USER: sch-user
