@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-prisma",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "prisma": "^5.0.0"
+  }
+}
