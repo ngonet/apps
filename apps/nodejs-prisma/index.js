@@ -2,29 +2,26 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  // Crear tablas si no existen (ejecuta migraciones)
-  await prisma.$executeRaw`CREATE TABLE IF NOT EXISTS "User" (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL
-  )`;
+  try {
+    // Upsert (crear o actualizar si existe)
+    await prisma.user.upsert({
+      where: { email: "alice@example.com" },
+      update: {},
+      create: { name: "Alice", email: "alice@example.com" }
+    });
 
-  // Insertar datos de ejemplo
-  await prisma.user.createMany({
-    data: [
-      { name: "Alice", email: "alice@example.com" },
-      { name: "Bob", email: "bob@example.com" },
-    ],
-  });
+    await prisma.user.upsert({
+      where: { email: "bob@example.com" },
+      update: {},
+      create: { name: "Bob", email: "bob@example.com" }
+    });
 
-  console.log("Tablas creadas y datos inicializados");
+    console.log("Datos inicializados correctamente");
+  } catch (error) {
+    console.error("Error:", error.message);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main();
