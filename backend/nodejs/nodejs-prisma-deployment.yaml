@@ -29,6 +29,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /app/node_modules  # Evita sobrescribir en bind mounts (solo desarrollo)
-    volumes:
-      - name: data
-        emptyDir: {}  # Volumen temporal para node_modules
+      volumes:
+        - name: data
+          emptyDir: {}  # Volumen temporal para node_modules
