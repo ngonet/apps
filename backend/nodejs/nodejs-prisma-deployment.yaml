@@ -1,16 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-prisma
+  name: nodejs
+  labels:
+    app: nodejs
+    tier: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodejs-prisma
+      app: nodejs
+      tier: backend
   template:
     metadata:
       labels:
-        app: nodejs-prisma
+        app: nodejs
+        tier: backend
     spec:
       containers:
         - name: nodejs
@@ -21,11 +26,6 @@ spec:
                 secretKeyRef:
                   name: prisma-db-url
                   key: DATABASE_URL
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: pgsql-secret
-                  key: POSTGRES_PASSWORD
           command: ["sh", "-c"]
           args:
             - "npx prisma generate && 
