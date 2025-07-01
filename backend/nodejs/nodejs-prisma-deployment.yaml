@@ -17,32 +17,9 @@ spec:
         app: nodejs
         tier: backend
     spec:
-      initContainers:
-        # 1. Generación del cliente Prisma
-        - name: prisma-generate
-          image: ngoyarzo/nodejs-prisma:20.0
-          command: ["npx", "prisma", "generate"]
-          volumeMounts:
-            - name: prisma-modules
-              mountPath: /app/node_modules
-
-        # 2. Aplicación de migraciones
-        - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:20.0
-          command: ["npx", "prisma", "migrate", "deploy"]
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: prisma-db-url
-                  key: DATABASE_URL
-          volumeMounts:
-            - name: prisma-modules
-              mountPath: /app/node_modules
-
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:20.0
+          image: ngoyarzo/nodejs-prisma:33.0
           ports:
             - containerPort: 3000
           env:
@@ -53,21 +30,8 @@ spec:
                   key: DATABASE_URL
           command: ["node", "server.js"]
           volumeMounts:
-            - name: prisma-modules
+            - name: node-modules
               mountPath: /app/node_modules
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-            initialDelaySeconds: 45
-            periodSeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: 3000
-            initialDelaySeconds: 20
-            periodSeconds: 10
-
       volumes:
-        - name: prisma-modules
+        - name: node-modules
           emptyDir: {}

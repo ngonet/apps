@@ -3,24 +3,24 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
-COPY prisma ./prisma/
 
 RUN apk add --no-cache openssl
 
 # Instala dependencias 
-RUN npm ci 
+RUN npm ci --ignore-scripts
+
+# Copiar el resto del código (incluye schema.prisma, etc.)
+COPY . .
+
+# Generar cliente Prisma en node_modules/@prisma/client
+RUN npx prisma generate
 
 # --- Fase Final ---
 FROM node:18-alpine
 WORKDIR /app
 
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/prisma ./prisma
-COPY . .
-
-# Asegúrate de copiar el script de seeding si está en otro directorio
-#COPY prisma/seed.js ./prisma/  # Si usas un script personalizado
+# Copiar app completa con dependencias y Prisma client generado
+COPY --from=builder /app /app
 
 EXPOSE 3000
 
