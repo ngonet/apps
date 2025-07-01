@@ -46,7 +46,7 @@ spec:
         #      mountPath: /app/node_modules/.prisma
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:4.0
+          image: ngoyarzo/nodejs-prisma:1.0
           env:
             - name: DATABASE_URL
               valueFrom:
