@@ -26,22 +26,16 @@ spec:
         - name: prisma-migrate
           image: ngoyarzo/nodejs-prisma:7.0
           command: ["npx", "prisma", "migrate", "deploy"]
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
+          envFrom:
+            - secretRef:
                   name: prisma-db-url
-                  key: DATABASE_URL
         # 2. InitContainer para seeds (ejecuta solo si las migraciones tienen éxito)
         - name: prisma-seed
           image: ngoyarzo/nodejs-prisma:7.0
           command: ["npx", "prisma", "db", "seed"]
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
+          envFrom:
+            - secretRef:
                   name: prisma-db-url
-                  key: DATABASE_URL
           # Opcional: Volumen para cache de Prisma (si el seed depende de archivos)
           volumeMounts:
             - mountPath: /app/node_modules/.prisma
