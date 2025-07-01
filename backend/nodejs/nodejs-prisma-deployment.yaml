@@ -17,33 +17,33 @@ spec:
         app: nodejs
         tier: backend
     spec:
-      initContainers:
+      #      initContainers:
         # 1. Aplicación de migraciones
-        - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:8.0
-          command: ["npx", "prisma", "migrate", "deploy"]
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: prisma-db-url
-                  key: DATABASE_URL
-          volumeMounts:
-            - name: prisma-cache
-              mountPath: /app/node_modules/.prisma
+        #  - name: prisma-migrate
+        #  image: ngoyarzo/nodejs-prisma:8.0
+        #  command: ["npx", "prisma", "migrate", "deploy"]
+        #  env:
+        #   - name: DATABASE_URL
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: prisma-db-url
+        #         key: DATABASE_URL
+        # volumeMounts:
+        #   - name: prisma-cache
+        #     mountPath: /app/node_modules/.prisma
         # 2. Ejecución de seeds
-        - name: prisma-seed
-          image: ngoyarzo/nodejs-prisma:8.0
-          command: ["npx", "prisma", "db", "seed"]
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: prisma-db-url
-                  key: DATABASE_URL
-          volumeMounts:
-            - name: prisma-cache
-              mountPath: /app/node_modules/.prisma
+        #- name: prisma-seed
+        # image: ngoyarzo/nodejs-prisma:8.0
+        # command: ["npx", "prisma", "db", "seed"]
+        # env:
+        #   - name: DATABASE_URL
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: prisma-db-url
+        #         key: DATABASE_URL
+        #  volumeMounts:
+        #    - name: prisma-cache
+        #      mountPath: /app/node_modules/.prisma
       containers:
         - name: nodejs
           image: ngoyarzo/nodejs-prisma:8.0
@@ -53,14 +53,18 @@ spec:
                 secretKeyRef:
                   name: prisma-db-url
                   key: DATABASE_URL
-          command: ["node", "index.js"]
+          command: ["sh", "-c"]
+          args:
+            - "npx prisma generate && Add commentMore actions
+              npx prisma migrate deploy && 
+              node index.js"
           volumeMounts:
-            - name: prisma-cache
-              mountPath: /app/node_modules/.prisma
+            #            - name: prisma-cache
+            # mountPath: /app/node_modules/.prisma
             - name: data
               mountPath: /app/node_modules
       volumes:
-        - name: prisma-cache
-          emptyDir: {}
+        #  - name: prisma-cache
+        # emptyDir: {}
         - name: data
           emptyDir: {}
