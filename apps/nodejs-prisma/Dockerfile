@@ -22,4 +22,6 @@ COPY . .
 # Asegúrate de copiar el script de seeding si está en otro directorio
 #COPY prisma/seed.js ./prisma/  # Si usas un script personalizado
 
+EXPOSE 3000
+
 #CMD ["node", "index.js"]
