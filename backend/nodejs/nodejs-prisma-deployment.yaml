@@ -21,7 +21,7 @@ spec:
         # 1. InitContainer para migraciones
         - name: prisma-migrate
           image: ngoyarzo/nodejs-prisma:5.0
-          command: ["npx", "prisma", "migrate", "deploy"]
+          command: ["sh", "-c", "npx prisma migrate deploy || (npx prisma migrate dev --name init && exit 1)"]
           envFrom:
             - secretRef:
                 name: prisma-db-url
