@@ -18,31 +18,42 @@ spec:
         tier: backend
     spec:
       initContainers:
-        # 0. InitContainer para prismac client
+        # 0. Generación del cliente Prisma
         - name: prisma-generate
-          image: ngoyarzo/nodejs-prisma:7.0
+          image: ngoyarzo/nodejs-prisma:6.0
           command: ["npx", "prisma", "generate"]
-       # 1. InitContainer para migraciones
-        - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:7.0
-          command: ["npx", "prisma", "migrate", "deploy"]
-          envFrom:
-            - secretRef:
-                  name: prisma-db-url
-        # 2. InitContainer para seeds (ejecuta solo si las migraciones tienen éxito)
-        - name: prisma-seed
-          image: ngoyarzo/nodejs-prisma:7.0
-          command: ["npx", "prisma", "db", "seed"]
-          envFrom:
-            - secretRef:
-                  name: prisma-db-url
-          # Opcional: Volumen para cache de Prisma (si el seed depende de archivos)
           volumeMounts:
-            - mountPath: /app/node_modules/.prisma
-              name: prisma-cache
+            - name: prisma-cache
+              mountPath: /app/node_modules/.prisma
+        # 1. Aplicación de migraciones
+        - name: prisma-migrate
+          image: ngoyarzo/nodejs-prisma:6.0
+          command: ["npx", "prisma", "migrate", "deploy"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: prisma-db-url
+                  key: DATABASE_URL
+          volumeMounts:
+            - name: prisma-cache
+              mountPath: /app/node_modules/.prisma
+        # 2. Ejecución de seeds
+        - name: prisma-seed
+          image: ngoyarzo/nodejs-prisma:6.0
+          command: ["npx", "prisma", "db", "seed"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: prisma-db-url
+                  key: DATABASE_URL
+          volumeMounts:
+            - name: prisma-cache
+              mountPath: /app/node_modules/.prisma
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:7.0
+          image: ngoyarzo/nodejs-prisma:6.0
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -50,17 +61,13 @@ spec:
                   name: prisma-db-url
                   key: DATABASE_URL
           command: ["node", "index.js"]
-          #          args:
-          #  - "npx prisma generate && 
-          #    npx prisma migrate deploy && 
-          #    node index.js"
           volumeMounts:
             - name: prisma-cache
               mountPath: /app/node_modules/.prisma
             - name: data
-              mountPath: /app/node_modules  # Evita sobrescribir en bind mounts (solo desarrollo)
+              mountPath: /app/node_modules
       volumes:
         - name: prisma-cache
           emptyDir: {}
         - name: data
-          emptyDir: {}  # Volumen temporal para node_modules
+          emptyDir: {}
