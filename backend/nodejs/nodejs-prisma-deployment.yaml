@@ -50,8 +50,6 @@ spec:
                   name: prisma-db-url
                   key: DATABASE_URL
           command: ["node", "index.js"]
-          ports:
-            - containerPort: 3000
           volumeMounts:
             - name: prisma-modules
               mountPath: /app/node_modules
