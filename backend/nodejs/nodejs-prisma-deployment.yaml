@@ -17,20 +17,40 @@ spec:
         app: nodejs
         tier: backend
     spec:
+      initContainers:
+        # 1. InitContainer para migraciones
+        - name: prisma-migrate
+          image: tu-imagen:latest
+          command: ["npx", "prisma", "migrate", "deploy"]
+          envFrom:
+            - secretRef:
+                name: db-secrets
+
+        # 2. InitContainer para seeds (ejecuta solo si las migraciones tienen éxito)
+        - name: prisma-seed
+          image: tu-imagen:latest
+          command: ["npx", "prisma", "db", "seed"]
+          envFrom:
+            - secretRef:
+                name: db-secrets
+          # Opcional: Volumen para cache de Prisma (si el seed depende de archivos)
+          volumeMounts:
+            - mountPath: /app/node_modules/.prisma
+              name: prisma-cache
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:4.0
+          image: ngoyarzo/nodejs-prisma:5.0
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: prisma-db-url
                   key: DATABASE_URL
-          command: ["sh", "-c"]
-          args:
-            - "npx prisma generate && 
-              npx prisma migrate deploy && 
-              node index.js"
+          command: ["node", "index"]
+          #          args:
+          #  - "npx prisma generate && 
+          #    npx prisma migrate deploy && 
+          #    node index.js"
           volumeMounts:
             - name: data
               mountPath: /app/node_modules  # Evita sobrescribir en bind mounts (solo desarrollo)

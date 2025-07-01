@@ -1,8 +1,23 @@
-FROM node:18-alpine
+# --- Fase Builder ---
+FROM node:18-alpine AS builder
+
 WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
-RUN npm install
-RUN npx prisma generate
+
+# Instala dependencias y genera cliente de Prisma
+RUN npm ci --ignore-scripts && npx prisma generate
+
+# --- Fase Final ---
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/prisma ./prisma
 COPY . .
-CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
+
+# Asegúrate de copiar el script de seeding si está en otro directorio
+#COPY prisma/seed.js ./prisma/  # Si usas un script personalizado
+
+#CMD ["node", "index.js"]
