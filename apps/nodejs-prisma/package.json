@@ -5,7 +5,9 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@prisma/client": "^5.0.0",
-    "prisma": "^5.0.0"
+    "@prisma/client": "^6.10.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.10.1"
   }
 }
