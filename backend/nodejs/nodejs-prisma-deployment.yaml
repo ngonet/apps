@@ -55,8 +55,7 @@ spec:
                   key: DATABASE_URL
           command: ["sh", "-c"]
           args:
-            - "npx prisma generate && 
-              npx prisma migrate dev --name init  && 
+            - "npx prisma migrate deploy  && 
               node index.js"
           volumeMounts:
             #            - name: prisma-cache
