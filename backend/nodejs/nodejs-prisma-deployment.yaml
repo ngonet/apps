@@ -46,7 +46,7 @@ spec:
           volumeMounts:
             - mountPath: /app/node_modules/.prisma
               name: prisma-cache
-      containers:
+      containers:
         - name: nodejs
           image: ngoyarzo/nodejs-prisma:6.0
           env:
