@@ -18,9 +18,9 @@ async function main() {
       })
     ]);
 
-    console.log("✅ Datos iniciales cargados correctamente.");
+    console.log("Datos iniciales cargados correctamente.");
   } catch (error) {
-    console.error("❌ Error al cargar datos:", error.message);
+    console.error("Error al cargar datos:", error.message);
   } finally {
     await prisma.$disconnect();
   }
