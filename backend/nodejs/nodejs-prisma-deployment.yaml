@@ -18,27 +18,37 @@ spec:
         tier: backend
     spec:
       initContainers:
-        # 1. InitContainer para migraciones
+        # 0. InitContainer para prismac client
+        - name: prisma-generate
+          image: ngoyarzo/nodejs-prisma:6.0
+          command: ["npx", "prisma", "generate"]
+       # 1. InitContainer para migraciones
         - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:5.0
+          image: ngoyarzo/nodejs-prisma:6.0
           command: ["npx", "prisma", "migrate", "deploy"]
-          envFrom:
-            - secretRef:
-                name: prisma-db-url
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: prisma-db-url
+                  key: DATABASE_URL
         # 2. InitContainer para seeds (ejecuta solo si las migraciones tienen éxito)
         - name: prisma-seed
-          image: ngoyarzo/nodejs-prisma:5.0
+          image: ngoyarzo/nodejs-prisma:6.0
           command: ["npx", "prisma", "db", "seed"]
-          envFrom:
-            - secretRef:
-                name: prisma-db-url
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: prisma-db-url
+                  key: DATABASE_URL
           # Opcional: Volumen para cache de Prisma (si el seed depende de archivos)
           volumeMounts:
             - mountPath: /app/node_modules/.prisma
               name: prisma-cache
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:5.0
+          image: ngoyarzo/nodejs-prisma:6.0
           env:
             - name: DATABASE_URL
               valueFrom:
