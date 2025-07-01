@@ -5,8 +5,8 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
-# Instala dependencias 
-RUN npm ci 
+# Instala dependencias y genera cliente de Prisma
+RUN npm ci && npx prisma generate
 
 # --- Fase Final ---
 FROM node:18-alpine

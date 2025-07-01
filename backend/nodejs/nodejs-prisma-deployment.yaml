@@ -18,16 +18,9 @@ spec:
         tier: backend
     spec:
       initContainers:
-        # 0. Generación del cliente Prisma
-        - name: prisma-generate
-          image: ngoyarzo/nodejs-prisma:7.0
-          command: ["npx", "prisma", "generate"]
-          volumeMounts:
-            - name: prisma-cache
-              mountPath: /app/node_modules/.prisma
         # 1. Aplicación de migraciones
         - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:7.0
+          image: ngoyarzo/nodejs-prisma:8.0
           command: ["npx", "prisma", "migrate", "deploy"]
           env:
             - name: DATABASE_URL
@@ -40,7 +33,7 @@ spec:
               mountPath: /app/node_modules/.prisma
         # 2. Ejecución de seeds
         - name: prisma-seed
-          image: ngoyarzo/nodejs-prisma:7.0
+          image: ngoyarzo/nodejs-prisma:8.0
           command: ["npx", "prisma", "db", "seed"]
           env:
             - name: DATABASE_URL
@@ -53,7 +46,7 @@ spec:
               mountPath: /app/node_modules/.prisma
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:7.0
+          image: ngoyarzo/nodejs-prisma:8.0
           env:
             - name: DATABASE_URL
               valueFrom:
