@@ -17,33 +17,29 @@ spec:
         app: nodejs
         tier: backend
     spec:
-      #      initContainers:
-        # 1. Aplicación de migraciones
-        #  - name: prisma-migrate
-        #  image: ngoyarzo/nodejs-prisma:8.0
-        #  command: ["npx", "prisma", "migrate", "deploy"]
-        #  env:
-        #   - name: DATABASE_URL
-        #     valueFrom:
-        #       secretKeyRef:
-        #         name: prisma-db-url
-        #         key: DATABASE_URL
-        # volumeMounts:
-        #   - name: prisma-cache
-        #     mountPath: /app/node_modules/.prisma
-        # 2. Ejecución de seeds
-        #- name: prisma-seed
-        # image: ngoyarzo/nodejs-prisma:8.0
-        # command: ["npx", "prisma", "db", "seed"]
-        # env:
-        #   - name: DATABASE_URL
-        #     valueFrom:
-        #       secretKeyRef:
-        #         name: prisma-db-url
-        #         key: DATABASE_URL
-        #  volumeMounts:
-        #    - name: prisma-cache
-        #      mountPath: /app/node_modules/.prisma
+      initContainers:
+        # 1. Generación del cliente Prisma
+        - name: prisma-generate
+          image: ngoyarzo/nodejs-prisma:latest
+          command: ["npx", "prisma", "generate"]
+          volumeMounts:
+            - name: prisma-modules
+              mountPath: /app/node_modules
+
+        # 2. Aplicación de migraciones
+        - name: prisma-migrate
+          image: ngoyarzo/nodejs-prisma:latest
+          command: ["npx", "prisma", "migrate", "deploy"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: prisma-db-url
+                  key: DATABASE_URL
+          volumeMounts:
+            - name: prisma-modules
+              mountPath: /app/node_modules
+
       containers:
         - name: nodejs
           image: ngoyarzo/nodejs-prisma:latest
@@ -53,18 +49,25 @@ spec:
                 secretKeyRef:
                   name: prisma-db-url
                   key: DATABASE_URL
-          command: ["sh", "-c"]
-          args:
-            - "npx prisma generate &&
-              npx prisma migrate deploy  && 
-              node index.js"
+          command: ["node", "index.js"]
+          ports:
+            - containerPort: 3000
           volumeMounts:
-            #            - name: prisma-cache
-            # mountPath: /app/node_modules/.prisma
-            - name: data
+            - name: prisma-modules
               mountPath: /app/node_modules
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
       volumes:
-        #  - name: prisma-cache
-        # emptyDir: {}
-        - name: data
+        - name: prisma-modules
           emptyDir: {}
