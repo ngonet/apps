@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
+RUN apk add --no-cache openssl
+
 # Instala dependencias 
 RUN npm ci 
 
