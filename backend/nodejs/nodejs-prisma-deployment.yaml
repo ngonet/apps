@@ -43,6 +43,8 @@ spec:
       containers:
         - name: nodejs
           image: ngoyarzo/nodejs-prisma:15.0
+          ports:
+            - containerPort: 3000
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -53,6 +55,18 @@ spec:
           volumeMounts:
             - name: prisma-modules
               mountPath: /app/node_modules
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 45
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10
 
       volumes:
         - name: prisma-modules
