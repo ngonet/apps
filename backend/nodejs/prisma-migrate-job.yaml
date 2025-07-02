@@ -9,7 +9,7 @@ spec:
       containers:
         - name: prisma-migrate
           image: ngoyarzo/nodejs-prisma:dev2.0
-          command: ["npx", "prisma", "migrate", "deploy", "--schema prisma/schema/"]
+          command: ["npx", "prisma", "migrate", "deploy", "--schema=./schema/"]
           env:
             - name: DATABASE_URL
               valueFrom:
