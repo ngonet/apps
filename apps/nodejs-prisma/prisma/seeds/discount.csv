@@ -1,0 +1,12 @@
+PRE,Previsión A.F.P.
+AAF,Ahorro A.F.P.
+SAL,Previsión ISAPRE y/o FONASA
+ASA,Adicional Salud
+IMP,Impuesto
+CCA,Descuento Cajas de Compensación y Asignación Familiar (CCAF)
+DIF,Descuentos instituciones financieras
+DIS,Descuentos instituciones sociales,false,false
+REJ,Retención Judicial
+SCE,Seguro de Cesantía Trabajador,true,false
+ANT,Anticipo Sueldo,false,false
+ODV,Otros descuentos variables

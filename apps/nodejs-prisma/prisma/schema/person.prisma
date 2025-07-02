@@ -1,0 +1,114 @@
+/// @namespace Person
+model Person {
+  id            String         @id @default(uuid())
+  rut           String         @unique
+  firstName     String         @map("first_name")
+  firstSurname  String         @map("first_surname")
+  secondSurname String         @map("second_surname")
+  address       String
+  communeId     Int            @map("commune_id")
+  commune       Commune        @relation(fields: [communeId], references: [id])
+  phone         String?
+  cellphone     String?
+  email         String?        @unique
+  birthdate     DateTime
+  /// chilena, extranjera
+  nationality   String
+  /// Masculino. Femenino
+  sex           String
+  /// Casado, Separado, Soltero, Viudad, Conviviente, Divorsiado, Union Civil
+  civilStatus   String         @map("civil_status")
+  active        Boolean?       @default(true)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updateAt      DateTime       @updatedAt @map("update_at")
+
+  burden        Burden[]
+  /// @minItems 1
+  document      Document[]
+  /// @minItems 1
+  afpPerson     AfpPerson[]
+  /// @minItems 1
+  healthPerson  HealthPerson[]
+
+  @@map("persons")
+}
+
+/// @namespace Person
+model Burden {
+  id            String   @id @default(uuid())
+  personId      String   @map("person_id")
+  person        Person   @relation(fields: [personId], references: [id])
+  rut           String   @unique
+  firstName     String   @map("first_name")
+  firstSurname  String   @map("first_surname")
+  secondSurname String   @map("second_surname")
+  birthdate     DateTime
+  /// chilena, extranjera
+  nationality   String
+  /// Masculino. Femenino
+  sex           String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updateAt      DateTime @updatedAt @map("update_at")
+
+  @@map("burdens")
+}
+
+/// @namespace Person
+model Health {
+  id           String         @id @default(uuid())
+  code         String         @unique
+  rut          String         @unique
+  name         String         @unique
+  rate         Decimal?       @default(0.07)
+
+  /// @minItems 1
+  HealthPerson HealthPerson[]
+
+  @@map("healths")
+}
+
+/// @namespace Person
+model HealthPerson {
+  id        String   @id @default(uuid())
+  healthId  String   @map("health_id")
+  health    Health   @relation(fields: [healthId], references: [id])
+  personId  String   @unique @map("person_id")
+  person    Person   @relation(fields: [personId], references: [id])
+  planValue Decimal  @default(0.00) @map("plan_value")
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
+
+  @@map("healths_persons")
+}
+
+/// Administradoras de Fondos de Pensiones
+/// @namespace Person
+model Afp {
+  id              String      @id @default(uuid())
+  code            String      @unique
+  rut             String      @unique
+  name            String      @unique
+  dependentRate   Decimal     @map("dependent_rate")
+  independentRate Decimal     @map("independent_rate")
+  sisRate         Decimal     @map("sis_rate")
+  since           DateTime?
+  until           DateTime?
+
+  /// @minItems 1
+  afpPerson       AfpPerson[]
+
+  @@map("afps")
+}
+
+/// @namespace Person
+model AfpPerson {
+  id        String   @id @default(uuid())
+  afpId     String   @map("afp_id")
+  afp       Afp      @relation(fields: [afpId], references: [id])
+  personId  String   @unique @map("person_id")
+  person    Person   @relation(fields: [personId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
+
+  @@map("afps_persons")
+}

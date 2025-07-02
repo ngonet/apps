@@ -1,0 +1,110 @@
+/// @namespace Company
+model Company {
+  id             String           @id @default(uuid())
+  rut            String           @unique
+  name           String           @unique
+  address        String
+  communeId      Int              @map("commune_id")
+  commune        Commune          @relation(fields: [communeId], references: [id])
+  phone          String?
+  email          String?
+  ccafId         Int?             @map("ccaf_id")
+  ccaf           Ccaf?            @relation(fields: [ccafId], references: [id])
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updateAt       DateTime         @updatedAt @map("update_at")
+
+  /// @minItems 1
+  users User[]
+  /// @minItems 1
+  representative Representative[]
+  /// @minItems 1
+  accounts       Account[]
+  /// @minItems 1
+  documents      Document[]
+  /// @minItems 1
+
+  @@map("companies")
+}
+
+/// @namespace Company
+// cambiar relacion con company
+model Representative {
+  id            String   @id @default(uuid())
+  companyId     String   @unique @map("company_id")
+  company       Company  @relation(fields: [companyId], references: [id])
+  rut           String   @unique
+  firstName     String   @map("first_name")
+  firstSurname  String   @map("first_surname")
+  secondSurname String   @map("second_surname")
+  phone         String?
+  cellphone     String?
+  email         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updateAt      DateTime @updatedAt @map("update_at")
+
+  @@map("representatives")
+}
+
+/// @namespace Company
+model User {
+  id        String  @id @default(uuid())
+  rut       String  @unique
+  name      String  @unique
+  password  String
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id])
+  roleId    String  @map("role_id")
+  role      Role    @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+/// @namespace Company
+model Role {
+  id    String @id @default(uuid())
+  name  String
+
+  /// @minItems 1
+  users User[]
+
+  @@map("roles")
+}
+
+/// @namespace Company
+model Account {
+  id        String  @id @default(uuid())
+  name      String
+  number    BigInt
+  bankId    String  @map("bank_id")
+  bank      Bank    @relation(fields: [bankId], references: [id])
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id])
+
+  @@map("accounts")
+}
+
+/// @namespace Company
+model Bank {
+  id       String    @id @default(uuid())
+  name     String
+
+  accounts Account[]
+
+  @@map("banks")
+}
+
+/// @namespace Company
+model Ccaf {
+  id         Int       @id @default(autoincrement())
+  code       String    @unique
+  rut        String    @unique
+  name       String
+  website    String
+  rateCcaf   Decimal   @map("rate_ccaf")
+  rateFonasa Decimal   @map("rate_fonasa")
+
+  /// @minItems 1
+  company    Company[]
+
+  @@map("ccafs")
+}

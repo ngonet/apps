@@ -1,0 +1,74 @@
+/// Indicadores Previsionales
+/// @namespace ProvisionalIndicators
+model ProvisionalIndicator {
+  id                          Int      @id @default(autoincrement())
+  date                        DateTime @unique @default(now())
+  maxTaxIncomeAFP             Decimal  @map("max_tax_income_afp")
+  maxTaxIncomeINP             Decimal  @map("max_tax_income_inp")
+  maxTaxIncomeAFC             Decimal  @map("max_tax_income_afc")
+  minTaxIncomeDepIndep        Int      @map("min_tax_income_dep_indep")
+  minTaxIncomeSalaryGrade     Int      @map("min_tax_income_salary_grade")
+  minTaxIncome1865            Int      @map("min_tax_income_18_65")
+  minTaxIncomeNoRem           Int      @map("min_tax_income_no_rem")
+  minTaxIncomeDomesticWorker  Int      @map("min_tax_income_domestic_worker")
+  apvTopMonthly               Decimal  @map("apv_top_monthly")
+  apvTopAnnual                Decimal  @map("apv_top_annual")
+  depositAgreementTopAnnual   Decimal  @map("deposit_agreement_top_annual")
+  depositAgreementPrivateHome Decimal  @map("deposit_agreement_private_home")
+
+  @@map("provisional_indicators")
+}
+
+/// @namespace ProvisionalIndicators
+model DailyIndicator {
+  id   Int      @id @default(autoincrement())
+  date DateTime @unique @default(now())
+  uf   Decimal
+  utm  Int
+
+  @@map("daily_indicators")
+}
+
+/// @namespace ProvisionalIndicators
+model SingleTax {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  rentSince Decimal  @map("rent_since")
+  rentUntil Decimal? @map("rent_until")
+  factor    Decimal
+  discount  Decimal
+  rate      Decimal?
+
+  @@map("single_taxs")
+}
+
+/// @namespace ProvisionalIndicators
+model Afc {
+  id                     Int      @id @default(autoincrement())
+  date                   DateTime @unique
+  cicIndefiniteEmployer  Decimal  @map("cic_indefinite_employer")
+  cicIndefiniteWorker    Decimal  @map("cic_indefinite_worker")
+  cicTemporaryEmployer   Decimal  @map("cic_temporary_employer")
+  cicTemporaryWorker     Decimal  @map("cic_temporary_worker")
+  cicHousekeeperEmployer Decimal  @map("cic_housekeeper_employer")
+  cicHousekeeperWorker   Decimal  @map("cic_housekeeper_worker")
+  fcsIndefiniteEmployer  Decimal  @map("fcs_indefinite_employer")
+  fcsTemporaryEmployer   Decimal  @map("fcs_temporary_employer")
+  fcsHousekeeperEmployer Decimal  @map("fcs_housekeeper_employer")
+  caiHousekeeperEmployer Decimal  @map("cai_housekeeper_employer")
+
+  @@map("afcs")
+}
+
+/// @namespace ProvisionalIndicators
+model FamilyAllowance {
+  id        Int      @id @default(autoincrement())
+  section   String
+  amount    Int
+  rentSince Int      @map("rent_since")
+  rentUntil Int      @map("rent_until")
+  dateSince DateTime @map("date_since")
+  dateUntil DateTime @map("date_until")
+
+  @@map("family_allowances")
+}
