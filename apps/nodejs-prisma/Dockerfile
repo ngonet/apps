@@ -16,7 +16,7 @@ RUN npm ci
 COPY . .
 
 # Genera Prisma Client
-RUN npx prisma generate
+RUN npx prisma generate --schema prisma/schema/
 
 # Elimina las devDependencies para producción
 RUN npm prune --omit=dev
