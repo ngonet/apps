@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: prisma-seed
-          image: ngoyarzo/nodejs-prisma:dev2.0
+          image: ngoyarzo/nodejs-prisma:dev2.1
           command: ["node", "prisma/seed.js"]
           env:
             - name: DATABASE_URL
