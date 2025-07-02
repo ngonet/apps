@@ -31,6 +31,7 @@ model Salary {
   /// @minItems 1
   remunerationSalary RemunerationSalary[]
   documentSalary     DocumentSalary[]
+  personSalaries PersonSalary[]
 
   @@map("salaries")
 }
@@ -61,6 +62,7 @@ model Discount {
   discountRemuneration DiscountRemuneration[]
   /// @minItems 1
   discountDocument     DiscountDocument[]
+  discountPersons DiscountPerson[]
 
   @@map("discounts")
 }
@@ -77,4 +79,36 @@ model DiscountRemuneration {
   until          DateTime?
 
   @@map("discounts_remunerations")
+}
+
+/// @namespace Remuneration
+model PersonSalary {
+  id        String   @id @default(uuid())
+  personId  String   @map("person_id")
+  salaryId  Int      @map("salary_id")
+  value     Decimal
+  since     DateTime?
+  until     DateTime?
+  description String?
+
+  person    Person   @relation(fields: [personId], references: [id])
+  salary    Salary   @relation(fields: [salaryId], references: [id])
+
+  @@map("persons_salaries")
+}
+
+/// @namespace Remuneration
+model DiscountPerson {
+  id          String   @id @default(uuid())
+  personId    String   @map("person_id")
+  discountId  Int      @map("discount_id")
+  value       Decimal
+  since       DateTime?
+  until       DateTime?
+  description String?
+
+  person      Person   @relation(fields: [personId], references: [id])
+  discount    Discount @relation(fields: [discountId], references: [id])
+
+  @@map("discounts_persons")
 }

@@ -407,6 +407,32 @@ CREATE TABLE "discounts_remunerations" (
     CONSTRAINT "discounts_remunerations_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "persons_salaries" (
+    "id" TEXT NOT NULL,
+    "person_id" TEXT NOT NULL,
+    "salary_id" INTEGER NOT NULL,
+    "value" DECIMAL(65,30) NOT NULL,
+    "since" TIMESTAMP(3),
+    "until" TIMESTAMP(3),
+    "description" TEXT,
+
+    CONSTRAINT "persons_salaries_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "discounts_persons" (
+    "id" TEXT NOT NULL,
+    "person_id" TEXT NOT NULL,
+    "discount_id" INTEGER NOT NULL,
+    "value" DECIMAL(65,30) NOT NULL,
+    "since" TIMESTAMP(3),
+    "until" TIMESTAMP(3),
+    "description" TEXT,
+
+    CONSTRAINT "discounts_persons_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "companies_rut_key" ON "companies"("rut");
 
@@ -607,3 +633,15 @@ ALTER TABLE "discounts_remunerations" ADD CONSTRAINT "discounts_remunerations_re
 
 -- AddForeignKey
 ALTER TABLE "discounts_remunerations" ADD CONSTRAINT "discounts_remunerations_discount_id_fkey" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "persons_salaries" ADD CONSTRAINT "persons_salaries_person_id_fkey" FOREIGN KEY ("person_id") REFERENCES "persons"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "persons_salaries" ADD CONSTRAINT "persons_salaries_salary_id_fkey" FOREIGN KEY ("salary_id") REFERENCES "salaries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "discounts_persons" ADD CONSTRAINT "discounts_persons_person_id_fkey" FOREIGN KEY ("person_id") REFERENCES "persons"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "discounts_persons" ADD CONSTRAINT "discounts_persons_discount_id_fkey" FOREIGN KEY ("discount_id") REFERENCES "discounts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

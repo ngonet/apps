@@ -30,6 +30,9 @@ model Person {
   /// @minItems 1
   healthPerson  HealthPerson[]
 
+  personSalaries   PersonSalary[]
+  discountsPersons DiscountPerson[]
+
   @@map("persons")
 }
 

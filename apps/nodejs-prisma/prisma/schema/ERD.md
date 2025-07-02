@@ -637,10 +637,30 @@ erDiagram
   DateTime since "nullable"
   DateTime until "nullable"
 }
+"persons_salaries" {
+  String id PK
+  String person_id FK
+  Int salary_id FK
+  Decimal value
+  DateTime since "nullable"
+  DateTime until "nullable"
+  String description "nullable"
+}
+"discounts_persons" {
+  String id PK
+  String person_id FK
+  Int discount_id FK
+  Decimal value
+  DateTime since "nullable"
+  DateTime until "nullable"
+  String description "nullable"
+}
 "remunerations_salaries" }|--|| "remunerations" : remuneration
 "remunerations_salaries" }|--|| "salaries" : salary
 "discounts_remunerations" }|--|| "remunerations" : remuneration
 "discounts_remunerations" }|--|| "discounts" : discount
+"persons_salaries" }o--|| "salaries" : salary
+"discounts_persons" }o--|| "discounts" : discount
 ```
 
 ### `remunerations`
@@ -694,3 +714,25 @@ erDiagram
   - `value`: 
   - `since`: 
   - `until`: 
+
+### `persons_salaries`
+
+**Properties**
+  - `id`: 
+  - `person_id`: 
+  - `salary_id`: 
+  - `value`: 
+  - `since`: 
+  - `until`: 
+  - `description`: 
+
+### `discounts_persons`
+
+**Properties**
+  - `id`: 
+  - `person_id`: 
+  - `discount_id`: 
+  - `value`: 
+  - `since`: 
+  - `until`: 
+  - `description`: 
