@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: ACCEPTED_ORIGINS
+              value: "*"
             - name: NODE_ENV
               value: "production"
             - name: DATABASE_URL
