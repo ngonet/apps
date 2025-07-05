@@ -6,7 +6,7 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nodejs-prisma.local
+        - nodejs-prisma.ngo.k3s.lab
       secretName: nodejs-prisma-tls
   rules:
     - host: nodejs-prisma.local
