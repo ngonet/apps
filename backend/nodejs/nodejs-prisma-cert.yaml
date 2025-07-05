@@ -4,7 +4,7 @@ metadata:
   name: nodejs-prisma-cert
 spec:
   secretName: nodejs-prisma-tls
-  duration: 10y
+  duration: 87600h
   renewBefore: 720h
   subject:
     organizations:
