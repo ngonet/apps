@@ -9,9 +9,9 @@ spec:
   subject:
     organizations:
       - internal
-  commonName: nodejs-prisma.local
+  commonName: nodejs-prisma.ngo.k3s.lab
   dnsNames:
-    - nodejs-prisma.local
+    - nodejs-prisma.ngo.k3s.lab
   issuerRef:
     name: selfsigned-cluster-issuer
     kind: ClusterIssuer
