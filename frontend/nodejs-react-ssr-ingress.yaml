@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: front.ngo.k3s.lab.cautiva
+  - host: front.ngo.k3s.lab
     http:
       paths:
       - backend:
