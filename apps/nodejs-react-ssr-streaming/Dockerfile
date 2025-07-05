@@ -1,5 +1,5 @@
 # --- Fase Builder ---
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -15,11 +15,13 @@ RUN npm ci
 # Copiar el resto del código fuente (incluye schema.prisma, etc.)
 COPY . .
 
+RUN npm run build
+
 # Elimina las devDependencies para producción
 RUN npm prune --omit=dev
 
 # --- Fase Final ---
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
