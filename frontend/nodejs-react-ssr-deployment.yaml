@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-react-ssr
+  labels:
+    app: nodejs-react-ssr
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-react-ssr
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: nodejs-react-ssr
+        tier: frontend
+    spec:
+      containers:
+        - name: nodejs-react-ssr
+          image: ngoyarzo/nodejs-react-ssr:dev1.0
+          ports:
+            - containerPort: 5173
+          env:
+            - name: ACCEPTED_ORIGINS
+              value: "*"
+            - name: NODE_ENV
+              value: "production"
+          command: ["node", "dist/server/entry-server.js"]
