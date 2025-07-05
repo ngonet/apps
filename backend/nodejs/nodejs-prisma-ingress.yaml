@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: nodejs-prisma-ingress
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - nodejs-prisma.local
