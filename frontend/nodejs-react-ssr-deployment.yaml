@@ -19,12 +19,10 @@ spec:
     spec:
       containers:
         - name: nodejs-react-ssr
-          image: ngoyarzo/nodejs-react-ssr:dev2.0
+          image: ngoyarzo/nodejs-react-ssr:dev3.0
           ports:
             - containerPort: 5173
           env:
-            - name: ACCEPTED_ORIGINS
-              value: "*"
             - name: NODE_ENV
               value: "production"
-          command: ["node", "dist/server/entry-server.js"]
+          command: ["npm", "run preview"]

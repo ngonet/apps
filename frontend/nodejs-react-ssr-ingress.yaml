@@ -14,7 +14,7 @@ spec:
       paths:
       - backend:
           service:
-            name: nodejs-react-ssr
+            name: nodejs-react-ssr-svc
             port:
               number: 80
         path: /
