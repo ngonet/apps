@@ -25,4 +25,4 @@ spec:
           env:
             - name: NODE_ENV
               value: "production"
-          command: ["npm", "run preview"]
+          command: ["node", "server.js"]
