@@ -9,9 +9,7 @@ function Card() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await axios.get('http://nodejs-prisma-svc:3001/api/company', {
-          params: { _limit: 3 }
-        })
+        const { data } = await axios.get('https://nodejs-prisma.local/api/company', {httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
         setPosts(data)
         setLoading(false)
       } catch (err) {

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nodejs-prisma-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+spec:
+  tls:
+    - hosts:
+        - nodejs-prisma.local
+      secretName: nodejs-prisma-tls
+  rules:
+    - host: nodejs-prisma.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nodejs-prisma-svc
+                port:
+                  number: 3001
+
