@@ -21,7 +21,7 @@ spec:
         - name: nodejs
           image: ngoyarzo/nodejs-prisma:dev2.4
           ports:
-            - containerPort: 3000
+             - containerPort: 3000
           env:
             - name: ACCEPTED_ORIGINS
               value: "*"
@@ -33,3 +33,12 @@ spec:
                   name: prisma-db-url
                   key: DATABASE_URL
           command: ["node", "src/server.js"]
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: nodejs-prisma-tls
+
