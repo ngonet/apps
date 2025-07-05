@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:dev2.2
+          image: ngoyarzo/nodejs-prisma:dev2.3
           ports:
             - containerPort: 3000
           env:
@@ -27,8 +27,6 @@ spec:
               value: "*"
             - name: NODE_ENV
               value: "production"
-            - name: isDevelopment
-              value: "false"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:

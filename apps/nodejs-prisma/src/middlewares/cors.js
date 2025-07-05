@@ -1,13 +1,12 @@
 import cors from 'cors';
 
-const ACCEPTED_ORIGINS = process.env.ACCEPTED_ORIGINS === '*'
-  ? '*'
+const ACCEPTED_ORIGINS = process.env.ACCEPTED_ORIGINS === '*' ? '*'
   : process.env.ACCEPTED_ORIGINS?.split(',') || [];
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
   cors({
     origin: (origin, callback) => {
-      if (!origin && isDevelopment) {
+      if (!origin) {
         return callback(null, true);
       }
 
