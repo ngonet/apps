@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nodejs-prisma-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx  # Ajusta según tu ingress controller
+  tls:
+  - hosts:
+    - api.ngo.k3s.lab
+    secretName: nodejs-prisma-tls  # Debe coincidir con tu secret de TLS
+  rules:
+  - host: front.ngo.k3s.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nodejs-prisma-svc
+            port:
+              number: 3001
