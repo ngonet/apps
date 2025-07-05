@@ -9,7 +9,7 @@ spec:
         - nodejs-prisma.ngo.k3s.lab
       secretName: nodejs-prisma-tls
   rules:
-    - host: nodejs-prisma.local
+    - host: nodejs-prisma.ngo.k3s.lab
       http:
         paths:
           - path: /
