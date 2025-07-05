@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import { Transform } from 'node:stream'
+import https from 'node:https'
+import axios from 'axios'
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -33,6 +35,20 @@ if (!isProduction) {
   app.use(compression())
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
+
+// Proxy /api/company to internal HTTPS backend
+app.get('/api/company', async (req, res) => {
+  try {
+    const agent = new https.Agent({ rejectUnauthorized: false }) // Ignora el certificado self-signed
+    const response = await axios.get('https://nodejs-prisma-svc:3001/api/company', {
+      httpsAgent: agent,
+    })
+    res.json(response.data)
+  } catch (error) {
+    console.error('Error en proxy /api/company:', error.message)
+    res.status(500).json({ error: 'Error al consultar el backend' })
+  }
+})
 
 // Serve HTML
 app.use('*all', async (req, res) => {

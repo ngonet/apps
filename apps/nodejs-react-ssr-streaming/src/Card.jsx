@@ -9,7 +9,7 @@ function Card() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await axios.get('https://nodejs-prisma-svc:3001/api/company', {httpsAgent: new https.Agent({ rejectUnauthorized: false }) })
+        const { data } = await axios.get('/api/company')
         setPosts(data)
         setLoading(false)
       } catch (err) {
