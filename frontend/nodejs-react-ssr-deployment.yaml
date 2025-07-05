@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-react-ssr
-          image: ngoyarzo/nodejs-react-ssr:dev3.0
+          image: ngoyarzo/nodejs-react-ssr:dev4.0
           ports:
             - containerPort: 5173
           env:

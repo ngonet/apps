@@ -35,4 +35,4 @@ COPY --from=builder /app /app
 EXPOSE 5173
 
 # Comando de inicio
-CMD ["npm", "run preview"]
+CMD ["node", "server.js"]
