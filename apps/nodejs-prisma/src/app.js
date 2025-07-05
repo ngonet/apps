@@ -1,5 +1,5 @@
+import fs from 'fs';
 import https from 'https';
-import fs from 'fs/promises';
 import express, { json, urlencoded } from 'express';
 import { prisma } from './config/prisma-client.js';
 import { PORT } from './config/process-env.js';
@@ -111,18 +111,20 @@ export const createApp = async (
 
   startCronJobs();
 
-//  const server = app.listen(PORT, () => {
-//    try {
-//      console.log('Server on port:', PORT);
-//    } catch (error) {
-//      console.log(error);
-//    }
-//  });
+  //  const server = app.listen(PORT, () => {
+  //    try {
+  //      console.log('Server on port:', PORT);
+  //    } catch (error) {
+  //      console.log(error);
+  //    }
+  //  });
 
-  const key = await fs.readFile('/certs/tls.key');
-  const cert = await fs.readFile('/certs/tls.crt');
-
-  const server = https.createServer({ key, cert }, app).listen(PORT, () => {
+  const httpsOptions = {
+    key: fs.readFileSync('/certs/tls.key'),
+    cert: fs.readFileSync('/certs/tls.crt'),
+  };
+  
+  const server = https.createServer(httpsOptions, app).listen(PORT, () => {
     console.log('🔐 HTTPS server running on port:', PORT);
   });
 
