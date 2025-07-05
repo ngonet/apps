@@ -27,6 +27,8 @@ spec:
               value: "*"
             - name: NODE_ENV
               value: "production"
+            - name: isDevelopment
+              value: "false"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
