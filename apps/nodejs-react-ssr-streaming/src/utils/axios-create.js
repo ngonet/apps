@@ -2,10 +2,13 @@ import axios from 'axios';
 import { showErrorNotification } from '@/composables/notification.js';
 import { transformData } from '@/utils/transform-data.js';
 
-export function axiosCreate(route) {
-  const instance = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/${route}`,
-  });
+
+export function axiosCreate(route, { internal = true } = {}) {
+  const baseURL = internal
+    ? `/api/${route}` // ruta interna para SSR
+    : `${import.meta.env.VITE_API_URL}/${route}`; // ruta externa en CSR
+
+  const instance = axios.create({ baseURL });
 
   // Interceptor de request para limpiar formato de datos
   instance.interceptors.request.use(

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server",
+    "dev": "node server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
@@ -36,6 +36,7 @@
     "datatables.net-react": "^1.0.1",
     "datatables.net-responsive-dt": "^3.0.4",
     "datatables.net-select-dt": "^3.0.0",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "flag-icons": "^7.3.2",
     "jquery": "^3.7.1",

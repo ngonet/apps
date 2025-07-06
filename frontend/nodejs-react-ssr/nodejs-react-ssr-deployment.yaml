@@ -19,12 +19,14 @@ spec:
     spec:
       containers:
         - name: nodejs-react-ssr
-          image: ngoyarzo/nodejs-react-ssr:dev10.0
+          image: ngoyarzo/nodejs-react-ssr:dev.latest
           ports:
             - containerPort: 5173
           env:
             - name: NODE_ENV
               value: "production"
             - name: VITE_API_URL
+              value: "https://nodejs-prisma-svc:3001/api"
+            - name: API_URL
               value: "https://nodejs-prisma-svc:3001/api"
           command: ["node", "server.js"]

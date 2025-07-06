@@ -3,6 +3,8 @@ import express from 'express'
 import { Transform } from 'node:stream'
 import https from 'node:https'
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -36,19 +38,63 @@ if (!isProduction) {
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
 
-// Proxy /api to internal HTTPS backend
-app.get('/api', async (req, res) => {
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// Proxy /api/company to internal HTTPS backend
+app.use('/api', async (req, res) => {
+  const apiUrl = process.env.API_URL
+
+  if (!apiUrl) {
+    console.error('❌ ERROR: API_URL no está definido en el entorno.')
+    return res.status(500).json({ error: 'API_URL no configurado en el servidor' })
+  }
+
+  const targetUrl = `${apiUrl}${req.originalUrl.replace(/^\/api/, '')}`
+
+//  console.log(`➡️ Proxying ${req.method} ${req.originalUrl} -> ${targetUrl}`)
+
   try {
-    const agent = new https.Agent({ rejectUnauthorized: false }) // Ignora el certificado self-signed
-    const response = await axios.get(process.env.VITE_API_URL, {
+    const agent = new https.Agent({ rejectUnauthorized: false })
+
+    const response = await axios({
+      method: req.method,
+      url: targetUrl,
+      headers: {
+        ...req.headers,
+        host: new URL(apiUrl).host,
+        // Authorization: `Bearer ${process.env.API_TOKEN}`, // si necesitas auth
+      },
+      params: req.query,
+      data: req.body,
       httpsAgent: agent,
     })
-    res.json(response.data)
+
+    res.status(response.status).json(response.data)
   } catch (error) {
-    console.error('Error en proxy /api:', error.message)
-    res.status(500).json({ error: 'Error al consultar el backend' })
+    console.error(`❌ Error al hacer proxy a ${targetUrl}:`, error.message)
+    if (error.response) {
+      console.error('Status:', error.response.status)
+      console.error('Data:', error.response.data)
+      res.status(error.response.status).json(error.response.data)
+    } else {
+      res.status(500).json({ error: 'Error al consultar el backend' })
+    }
   }
 })
+
+//app.get('/api/company', async (req, res) => {
+//  try {
+//    const agent = new https.Agent({ rejectUnauthorized: false }) // Ignora el certificado self-signed
+//    const response = await axios.get(process.env.API_URL + '/company', {
+//      httpsAgent: agent,
+//    })
+//    res.json(response.data)
+//  } catch (error) {
+//    console.error('Error en proxy /api/company:', error.message)
+//    res.status(500).json({ error: 'Error al consultar el backend' })
+//  }
+//})
 
 // Serve HTML
 app.use('*all', async (req, res) => {
