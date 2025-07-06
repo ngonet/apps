@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { axiosCreate } from './utils/axios-create'
 
 function Card() {
   const [posts, setPosts] = useState([])
@@ -9,7 +9,8 @@ function Card() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await axios.get('/api/company')
+        const instance = axiosCreate('company')
+        const { data } = await instance.get('')
         setPosts(data)
         setLoading(false)
       } catch (err) {

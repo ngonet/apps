@@ -36,16 +36,16 @@ if (!isProduction) {
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
 
-// Proxy /api/company to internal HTTPS backend
-app.get('/api/company', async (req, res) => {
+// Proxy /api to internal HTTPS backend
+app.get('/api', async (req, res) => {
   try {
     const agent = new https.Agent({ rejectUnauthorized: false }) // Ignora el certificado self-signed
-    const response = await axios.get('https://nodejs-prisma-svc:3001/api/company', {
+    const response = await axios.get(process.env.VITE_API_URL, {
       httpsAgent: agent,
     })
     res.json(response.data)
   } catch (error) {
-    console.error('Error en proxy /api/company:', error.message)
+    console.error('Error en proxy /api:', error.message)
     res.status(500).json({ error: 'Error al consultar el backend' })
   }
 })
