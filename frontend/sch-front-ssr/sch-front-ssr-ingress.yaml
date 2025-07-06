@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  generation: 1
+  name: sch-front-ssr
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sch.ngo.k3s.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: sch-front-ssr-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

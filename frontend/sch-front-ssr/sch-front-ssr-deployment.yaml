@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sch-front-ssr
+  labels:
+    app: ssh-front-ssr
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sch-front-ssr
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: sch-front-ssr
+        tier: frontend
+    spec:
+      containers:
+        - name: sch-front-ssr
+          image: ngoyarzo/sch-react-ssr:dev1.0
+          ports:
+            - containerPort: 5173
+          env:
+            - name: NODE_ENV
+              value: "production"
+          command: ["node", "server.js"]
