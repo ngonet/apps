@@ -10,8 +10,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import ApexChart from 'react-apexcharts';
 import 'react-calendar/dist/Calendar.css';
 
-import Card from '@/App-server'
-
 const DashboardV1 = () => {
   const redColor = getComputedStyle(document.body).getPropertyValue('--bs-red').trim();
   const orangeColor = getComputedStyle(document.body).getPropertyValue('--bs-orange').trim();
@@ -278,8 +276,6 @@ const DashboardV1 = () => {
       <h1 className="page-header">
         Dashboard <small>header small text goes here...</small>
       </h1>
-
-      <Card />
 
       <div className="row">
         <div className="col-xl-3 col-md-6">
