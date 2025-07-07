@@ -12,7 +12,7 @@ spec:
     - api.ngo.k3s.lab
     secretName: nodejs-prisma-tls  # Debe coincidir con tu secret de TLS
   rules:
-  - host: api.ngo.k3s.lab
+  - host: api.ngo.k3s.lab.cautiva
     http:
       paths:
       - path: /
