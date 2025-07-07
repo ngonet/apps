@@ -35,7 +35,7 @@ const Header = () => {
               </button>
             )}
             <Link to="/" className="navbar-brand">
-              <span className="navbar-logo" /> <b>School</b> Tech
+              <span className="navbar-logo" /> <b>Cautiva</b> Rem
             </Link>
 
             {appHeaderMegaMenu && (

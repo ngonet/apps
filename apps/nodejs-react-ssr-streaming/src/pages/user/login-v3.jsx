@@ -38,7 +38,7 @@ const LoginV3 = () => {
         />
         <div className="news-caption">
           <h4 className="caption-title">
-            <b>School</b> Tech App
+            <b>Cautiva</b> Rem App
           </h4>
           <p>
             Download the Color Admin app for iPhone®, iPad®, and Android™. Lorem ipsum dolor sit
@@ -51,7 +51,7 @@ const LoginV3 = () => {
           <div className="brand">
             <div className="d-flex align-items-center">
               <span className="logo" />
-              <b>School</b> Tech
+              <b>Cautiva</b> Rem
             </div>
             <small>Bootstrap 5 Responsive Admin Template</small>
           </div>

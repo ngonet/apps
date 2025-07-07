@@ -39,7 +39,7 @@ const RegisterV3 = () => {
         />
         <div className="news-caption">
           <h4 className="caption-title">
-            <b>School</b> Tech App
+            <b>Cautiva</b> Rem App
           </h4>
           <p>
             As a Color Admin app administrator, you use the Color Admin console to manage your

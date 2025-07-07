@@ -36,7 +36,7 @@ const LoginV1 = () => {
         <div className="login-header">
           <div className="brand">
             <div className="d-flex align-items-center">
-              <span className="logo" /> <b>School</b> Tech
+              <span className="logo" /> <b>Cautiva</b> Rem
             </div>
             <small>Bootstrap 5 Responsive Admin Template</small>
           </div>
