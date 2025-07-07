@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-react-ssr
-          image: ngoyarzo/nodejs-react-ssr:dev.latest
+          image: ngoyarzo/nodejs-react-ssr:dev.12
           ports:
             - containerPort: 5173
           env:
@@ -29,4 +29,6 @@ spec:
               value: "https://nodejs-prisma-svc:3001/api"
             - name: API_URL
               value: "https://nodejs-prisma-svc:3001/api"
+            - name: VITE_COMPANY_ID
+              value: "0e9524f8-73f2-409c-8a1b-2aecda30d5f0"
           command: ["node", "server.js"]

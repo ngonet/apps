@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
-import App from './App'
+import AppServer from './App-server'
 
 /**
  * @param {string} _url
@@ -9,7 +9,7 @@ import App from './App'
 export function render(_url, options) {
   return renderToPipeableStream(
     <StrictMode>
-      <App />
+      <AppServer />
     </StrictMode>,
     options,
   )

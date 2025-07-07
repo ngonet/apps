@@ -9,9 +9,6 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
   },
-  optimizeDeps: {
-    include: ['react-notifications-component']
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
