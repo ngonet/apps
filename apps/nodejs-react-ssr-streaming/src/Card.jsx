@@ -9,7 +9,7 @@ function Card() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const instance = axiosCreate('company', { internal: true });
+        const instance = axiosCreate('company');
         const { data } = await instance.get();
         setPosts(data)
         setLoading(false)
