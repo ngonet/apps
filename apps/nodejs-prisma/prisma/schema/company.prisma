@@ -1,20 +1,20 @@
 /// @namespace Company
 model Company {
-  id             String           @id @default(uuid())
-  rut            String           @unique
-  name           String           @unique
-  address        String
-  communeId      Int              @map("commune_id")
-  commune        Commune          @relation(fields: [communeId], references: [id])
-  phone          String?
-  email          String?
-  ccafId         Int?             @map("ccaf_id")
-  ccaf           Ccaf?            @relation(fields: [ccafId], references: [id])
-  createdAt      DateTime         @default(now()) @map("created_at")
-  updateAt       DateTime         @updatedAt @map("update_at")
+  id        String   @id @default(uuid())
+  rut       String   @unique
+  name      String   @unique
+  address   String
+  communeId Int      @map("commune_id")
+  commune   Commune  @relation(fields: [communeId], references: [id])
+  phone     String?
+  email     String?
+  ccafId    Int?     @map("ccaf_id")
+  ccaf      Ccaf?    @relation(fields: [ccafId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
 
   /// @minItems 1
-  users User[]
+  users          User[]
   /// @minItems 1
   representative Representative[]
   /// @minItems 1
@@ -61,8 +61,8 @@ model User {
 
 /// @namespace Company
 model Role {
-  id    String @id @default(uuid())
-  name  String
+  id   String @id @default(uuid())
+  name String
 
   /// @minItems 1
   users User[]
@@ -85,8 +85,8 @@ model Account {
 
 /// @namespace Company
 model Bank {
-  id       String    @id @default(uuid())
-  name     String
+  id   String @id @default(uuid())
+  name String
 
   accounts Account[]
 
@@ -95,16 +95,16 @@ model Bank {
 
 /// @namespace Company
 model Ccaf {
-  id         Int       @id @default(autoincrement())
-  code       String    @unique
-  rut        String    @unique
+  id         Int     @id @default(autoincrement())
+  code       String  @unique
+  rut        String  @unique
   name       String
   website    String
-  rateCcaf   Decimal   @map("rate_ccaf")
-  rateFonasa Decimal   @map("rate_fonasa")
+  rateCcaf   Decimal @map("rate_ccaf")
+  rateFonasa Decimal @map("rate_fonasa")
 
   /// @minItems 1
-  company    Company[]
+  company Company[]
 
   @@map("ccafs")
 }

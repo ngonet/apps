@@ -153,6 +153,7 @@ erDiagram
 erDiagram
 "document_types" {
   Int id PK
+  Int parent_id FK "nullable"
   String name UK
 }
 "positions" {
@@ -166,6 +167,7 @@ erDiagram
   String parent_id FK "nullable"
   Boolean status "nullable"
   Int document_type_id FK
+  String number UK
   DateTime date
   DateTime end_date "nullable"
   String company_id FK
@@ -196,6 +198,7 @@ erDiagram
   DateTime since "nullable"
   DateTime until "nullable"
 }
+"document_types" }o--o| "document_types" : parent
 "positions" }o--o| "positions" : parent
 "documents" }o--o| "documents" : parent
 "documents" }|--|| "document_types" : documentType
@@ -209,6 +212,7 @@ erDiagram
 
 **Properties**
   - `id`: 
+  - `parent_id`: 
   - `name`: 
 
 ### `positions`
@@ -226,6 +230,7 @@ erDiagram
   - `parent_id`: 
   - `status`: 
   - `document_type_id`: 
+  - `number`: 
   - `date`: 
   - `end_date`: 
   - `company_id`: 
