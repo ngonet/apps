@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgsql-svc-region
+  labels:
+    app: postgres-region
+    tier: database
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-region
+    tier: database
+  ports:
+    - port: 5432
+      targetPort: 5432

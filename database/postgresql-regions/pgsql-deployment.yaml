@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-region
+  labels:
+    app: postgres-region
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-region
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: postgres-region
+        tier: database
+    spec:
+      containers:
+        - name: postgres-region
+          image: 'postgres:15'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: pgsql-cm-region
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-secret-region
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pgsql-storage-region
+      volumes:
+        - name: pgsql-storage-region
+          persistentVolumeClaim:
+            claimName: pgsql-pvc-region

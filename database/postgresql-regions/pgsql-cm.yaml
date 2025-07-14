@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgsql-cm-region
+  labels:
+    app: postgres-region
+    tier: database
+data:
+  POSTGRES_DB: sch-region
+  POSTGRES_USER: sch-region
