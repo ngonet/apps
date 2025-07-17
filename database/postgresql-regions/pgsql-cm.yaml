@@ -7,4 +7,4 @@ metadata:
     tier: database
 data:
   POSTGRES_DB: sch-region
-  POSTGRES_USER: sch-region
+  POSTGRES_USER: sch-region-usr
