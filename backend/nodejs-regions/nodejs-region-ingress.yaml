@@ -6,11 +6,11 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: nginx  # Ajusta según tu ingress controller
+  ingressClassName: nginx
   tls:
   - hosts:
     - region.ngo.k3s.lab
-    secretName: nodejs-region-tls  # Debe coincidir con tu secret de TLS
+    secretName: nodejs-region-tls
   rules:
   - host: region.ngo.k3s.lab.cautiva
     http:
