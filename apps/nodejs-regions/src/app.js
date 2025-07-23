@@ -8,7 +8,7 @@ import { createCommuneRouter } from './routes/commune.routes.js';
 import { createNodeJSMetricsRouter } from './routes/nodejs-metrics.routes.js';
 import { createPrismaMetricsRouter } from './routes/prisma-metrics.routes.js';
 
-export const createApp = async ({ communeModel }) => {
+export const createApp = async ({ communeModel, environment }) => {
   const app = express();
 
   app.disable('x-powered-by');
@@ -17,10 +17,10 @@ export const createApp = async ({ communeModel }) => {
   app.use(json());
 
   if (environment === 'development' || environment === 'dev' || environment === 'local') {
-    console.log("➡️ Configurando logger detallado (Morgan - dev)");
+    console.log('➡️ Configurando logger detallado (Morgan - dev)');
     app.use(loggerMorgan('dev'));
   } else {
-    console.log("➡️ Configurando logger estándar (Morgan - combined)");
+    console.log('➡️ Configurando logger estándar (Morgan - combined)');
     app.use(loggerMorgan('combined'));
   }
 
