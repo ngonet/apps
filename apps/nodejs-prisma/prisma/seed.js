@@ -109,7 +109,7 @@ async function loadDocumentType(file) {
 
   for await (const record of records) {
     await prisma.documentType.upsert({
-      where: { id: 0 },
+      where: { name: record },
       update: {},
       create: {
         name: record,
@@ -125,7 +125,7 @@ async function loadHealth(file) {
     const attr = record.split(',');
 
     await prisma.health.upsert({
-      where: { id: '' },
+      where: { code: attr[0] },
       update: {},
       create: {
         code: attr[0],
@@ -143,7 +143,7 @@ async function loadPositions(file) {
     const attr = record.split(',');
 
     const newPosition = await prisma.position.upsert({
-      where: { id: 0 },
+      where: { code: attr[1] },
       update: {},
       create: {
         code: attr[1],
@@ -160,7 +160,7 @@ async function loadDiscount(file) {
     const attr = record.split(',');
 
     await prisma.discount.upsert({
-      where: { id: 0 },
+      where: { code: attr[0] },
       update: {},
       create: {
         code: attr[0],
@@ -177,7 +177,7 @@ async function loadSalary(file) {
     const attr = record.split(',');
 
     await prisma.salary.upsert({
-      where: { id: 0 },
+      where: { code: parseInt(attr[0]) },
       update: {},
       create: {
         code: parseInt(attr[0]),
@@ -194,7 +194,7 @@ async function loadProvisionalIndicator(file) {
     const attr = record.split(',');
 
     await prisma.provisionalIndicator.upsert({
-      where: { id: 0 },
+      where: { date: new Date(attr[0]) },
       update: {},
       create: {
         date: new Date(attr[0]),
@@ -222,7 +222,7 @@ async function loadCompany(file) {
     const attr = record.split(',');
 
     await prisma.company.upsert({
-      where: { id: '' },
+      where: { id: attr[0] },
       update: {},
       create: {
         id: attr[0],
@@ -244,7 +244,7 @@ async function loadRepresentative(file) {
     const attr = record.split(',');
 
     await prisma.representative.upsert({
-      where: { id: '' },
+      where: { rut: attr[1] },
       update: {},
       create: {
         companyId: attr[0],
@@ -266,7 +266,7 @@ async function loadDailyIndicator(file) {
     const attr = record.split(',');
 
     await prisma.dailyIndicator.upsert({
-      where: { id: 0 },
+      where: { date: new Date(attr[0]) },
       update: {},
       create: {
         date: new Date(attr[0]),
@@ -279,16 +279,22 @@ async function loadDailyIndicator(file) {
 
 async function loadSingleTax(file) {
   const records = loadFileCSV(`${file}`);
-
   for await (const record of records) {
     const attr = record.split(',');
+    const recordDate = new Date(attr[0]);
+    const recordRentSince = parseFloat(attr[1]);
 
     await prisma.singleTax.upsert({
-      where: { id: 0 },
-      update: {},
+      where: {
+        date_rentSince: {
+          date: recordDate,
+          rentSince: recordRentSince,
+        },
+      },
+      update: {}, 
       create: {
-        date: new Date(attr[0]),
-        rentSince: parseFloat(attr[1]),
+        date: recordDate,
+        rentSince: recordRentSince,
         rentUntil: parseFloat(attr[2]),
         factor: parseFloat(attr[3]),
         discount: parseFloat(attr[4]),
@@ -305,7 +311,7 @@ async function loadAfc(file) {
     const attr = record.split(',');
 
     await prisma.afc.upsert({
-      where: { id: 0 },
+      where: { date: new Date(attr[0]) },
       update: {},
       create: {
         date: new Date(attr[0]),
@@ -326,19 +332,25 @@ async function loadAfc(file) {
 
 async function loadFamilyAllowance(file) {
   const records = loadFileCSV(`${file}`);
-
   for await (const record of records) {
     const attr = record.split(',');
+    const recordSection = attr[0];
+    const recordDateSince = new Date(attr[4]);
 
     await prisma.familyAllowance.upsert({
-      where: { id: 0 },
+      where: {
+        section_dateSince: {
+          section: recordSection,
+          dateSince: recordDateSince,
+        },
+      },
       update: {},
       create: {
-        section: attr[0],
+        section: recordSection,
         amount: parseInt(attr[1]),
         rentSince: parseInt(attr[2]),
         rentUntil: parseInt(attr[3]),
-        dateSince: new Date(attr[4]),
+        dateSince: recordDateSince,
         dateUntil: new Date(attr[5]),
       },
     });
@@ -352,7 +364,7 @@ async function loadCcafs(file) {
     const attr = record.split(',');
 
     const newCcaf = await prisma.ccaf.upsert({
-      where: { id: 0 },
+      where: { code: attr[0] },
       update: {},
       create: {
         code: attr[0],

@@ -39,6 +39,7 @@ model SingleTax {
   discount  Decimal
   rate      Decimal?
 
+  @@unique([date, rentSince])
   @@map("single_taxs")
 }
 
@@ -70,5 +71,6 @@ model FamilyAllowance {
   dateSince DateTime @map("date_since")
   dateUntil DateTime @map("date_until")
 
+  @@unique([section, dateSince])
   @@map("family_allowances")
 }
