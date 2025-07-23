@@ -1,5 +1,4 @@
 import { createLogger, format, transports } from 'winston';
-import { NODE_ENV } from './process-env.js';
 
 const { combine, timestamp, json } = format;
 
