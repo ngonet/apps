@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: ngoyarzo/nodejs-prisma:dev2.6
+          image: ngoyarzo/nodejs-prisma:dev
           ports:
              - containerPort: 3001
           env:

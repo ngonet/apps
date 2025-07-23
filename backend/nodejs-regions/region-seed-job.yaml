@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: region-seed-job
-          image: ngoyarzo/nodejs-region:dev1.o
+          image: ngoyarzo/nodejs-region:dev
           command: ["node", "prisma/seed.js"]
           env:
             - name: DATABASE_URL

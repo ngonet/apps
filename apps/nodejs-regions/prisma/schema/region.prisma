@@ -34,10 +34,5 @@ model Commune {
   provinceId Int      @map("province_id")
   province   Province @relation(fields: [provinceId], references: [id])
 
-  /// @minItems 1
-  companies Company[]
-  /// @minItems 1
-  persons   Person[]
-
   @@map("communes")
 }

@@ -7,8 +7,8 @@ spec:
   template:
     spec:
       containers:
-        - name: prisma-migrate
-          image: ngoyarzo/nodejs-prisma:dev2.2
+        - name: prisma-migrate-job
+          image: ngoyarzo/nodejs-prisma:dev
           command: ["npx", "prisma", "migrate", "deploy", "--schema=prisma/schema/"]
           env:
             - name: DATABASE_URL
