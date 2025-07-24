@@ -86,7 +86,9 @@ CREATE TABLE "ccafs" (
 -- CreateTable
 CREATE TABLE "document_types" (
     "id" SERIAL NOT NULL,
+    "code" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "parent_id" INTEGER,
 
     CONSTRAINT "document_types_pkey" PRIMARY KEY ("id")
 );
@@ -107,6 +109,7 @@ CREATE TABLE "documents" (
     "parent_id" TEXT,
     "status" BOOLEAN DEFAULT true,
     "document_type_id" INTEGER NOT NULL,
+    "number" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "end_date" TIMESTAMP(3),
     "company_id" TEXT NOT NULL,
@@ -458,6 +461,9 @@ CREATE UNIQUE INDEX "ccafs_code_key" ON "ccafs"("code");
 CREATE UNIQUE INDEX "ccafs_rut_key" ON "ccafs"("rut");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "document_types_code_key" ON "document_types"("code");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "document_types_name_key" ON "document_types"("name");
 
 -- CreateIndex
@@ -465,6 +471,9 @@ CREATE UNIQUE INDEX "positions_code_key" ON "positions"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "positions_name_key" ON "positions"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "documents_number_key" ON "documents"("number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "persons_rut_key" ON "persons"("rut");
@@ -506,7 +515,13 @@ CREATE UNIQUE INDEX "provisional_indicators_date_key" ON "provisional_indicators
 CREATE UNIQUE INDEX "daily_indicators_date_key" ON "daily_indicators"("date");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "single_taxs_date_rent_since_key" ON "single_taxs"("date", "rent_since");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "afcs_date_key" ON "afcs"("date");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "family_allowances_section_date_since_key" ON "family_allowances"("section", "date_since");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "regions_code_key" ON "regions"("code");
@@ -561,6 +576,9 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_bank_id_fkey" FOREIGN KEY ("bank
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "companies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "document_types" ADD CONSTRAINT "document_types_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "document_types"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "positions" ADD CONSTRAINT "positions_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "positions"("id") ON DELETE SET NULL ON UPDATE CASCADE;

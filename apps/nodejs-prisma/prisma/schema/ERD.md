@@ -153,8 +153,9 @@ erDiagram
 erDiagram
 "document_types" {
   Int id PK
-  Int parent_id FK "nullable"
+  String code UK
   String name UK
+  Int parent_id FK "nullable"
 }
 "positions" {
   Int id PK
@@ -212,8 +213,9 @@ erDiagram
 
 **Properties**
   - `id`: 
-  - `parent_id`: 
+  - `code`: 
   - `name`: 
+  - `parent_id`: 
 
 ### `positions`
 
