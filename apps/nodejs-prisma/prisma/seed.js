@@ -104,6 +104,10 @@ async function loadAfps(file) {
   }
 }
 
+const normalize = (value) => {
+  return value === 'NULL' || value === '' ? null : parseInt(value);
+};
+
 async function loadDocumentType(file) {
   const records = loadFileCSV(`${file}`);
 
@@ -117,7 +121,7 @@ async function loadDocumentType(file) {
         id: parseInt(attr[0]),
         code: attr[1],
         name: attr[2],
-        parentId: attr[3],
+        parentId: normalize(attr[3]),
       },
     });
   }
