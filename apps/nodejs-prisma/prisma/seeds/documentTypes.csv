@@ -1,5 +1,9 @@
-Contrato Indefinido
-Contrato Plazo Fijo
-Reemplazo
-Planta
-Contrata
+1,CI,Contrato Indefinido,NULL
+2,CPF,Contrato Plazo Fijo,NULL
+3,RP,Reemplazo,NULL
+4,PL,Planta,NULL
+5,CT,Contrata,NULL
+6,ANX-MOD-CI,Anexo de Modificación CI,1
+7,CD-CI,Carta de Despido CI,1
+8,ANX-MOD-CPF,Anexo de Modificación CPF,2
+9,CD-CPF,Carta de Despido CPF,2

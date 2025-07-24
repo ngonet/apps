@@ -108,11 +108,16 @@ async function loadDocumentType(file) {
   const records = loadFileCSV(`${file}`);
 
   for await (const record of records) {
+    const attr = record.split(',');
+
     await prisma.documentType.upsert({
-      where: { name: record },
+      where: { code: attr[1] },
       update: {},
       create: {
-        name: record,
+        id: attr[0],
+        code: attr[1],
+        name: attr[2],
+        parentId: attr[3],
       },
     });
   }
@@ -291,7 +296,7 @@ async function loadSingleTax(file) {
           rentSince: recordRentSince,
         },
       },
-      update: {}, 
+      update: {},
       create: {
         date: recordDate,
         rentSince: recordRentSince,

@@ -1,10 +1,11 @@
 /// @namespace Document
 model DocumentType {
   id       Int            @id @default(autoincrement())
+  code     String         @unique
+  name     String         @unique
   parentId Int?           @map("parent_id")
   parent   DocumentType?  @relation("DocumentTypeParent", fields: [parentId], references: [id])
   child    DocumentType[] @relation("DocumentTypeParent")
-  name     String         @unique
 
   /// @minItems 1
   Document Document[]
