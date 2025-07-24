@@ -114,7 +114,7 @@ async function loadDocumentType(file) {
       where: { code: attr[1] },
       update: {},
       create: {
-        id: attr[0],
+        id: parseInt(attr[0]),
         code: attr[1],
         name: attr[2],
         parentId: attr[3],
