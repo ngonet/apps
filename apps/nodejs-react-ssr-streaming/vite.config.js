@@ -8,6 +8,18 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
+    host: true,
+    allowedHosts: [
+      'remu.ngo.k3s.lab.cautiva',
+      'localhost',
+      '127.0.0.1'
+    ],
+    hmr: {
+      host: 'localhost',
+      port: 5173,
+      protocol: 'ws',
+      clientPort: 5173 
+    }
   },
   resolve: {
     alias: {
