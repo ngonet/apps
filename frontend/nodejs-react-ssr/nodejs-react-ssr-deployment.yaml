@@ -19,12 +19,13 @@ spec:
     spec:
       containers:
         - name: nodejs-react-ssr
-          image: ngoyarzo/nodejs-react-ssr:dev.16
+          image: ngoyarzo/nodejs-react-ssr:dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 5173
           env:
             - name: NODE_ENV
-              value: "production"
+              value: "development"
           envFrom:
             - configMapRef:
                 name: nodejs-react-ssr-cm
