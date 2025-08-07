@@ -1,38 +1,32 @@
-# --- Fase Builder ---
+# --- Etapa 1: Construcción (Builder) ---
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Instala herramientas necesarias para prisma y dependencias
-RUN apk add --no-cache openssl
-
-# Copiar archivos de dependencias
+# Copia solo los archivos de dependencias para aprovechar la caché de Docker
 COPY package.json package-lock.json* ./
 
-# Instala TODAS las dependencias, incluidas las de desarrollo
+# Instala TODAS las dependencias (incluyendo devDependencies para el build)
 RUN npm ci
 
-# Copiar el resto del código fuente (incluye schema.prisma, etc.)
+# Copia el resto del código y ejecuta el build de producción
 COPY . .
-
 RUN npm run build
 
-# Elimina las devDependencies para producción
-RUN npm prune --omit=dev
-
-# --- Fase Final ---
+# --- Etapa 2: Producción (Final) ---
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Establece entorno de producción
-ENV NODE_ENV=production
+# Instala solo las dependencias de producción
+# Esto asegura que las devDependencies no estén en la imagen final
+COPY package.json package-lock.json* ./
+RUN npm ci --omit=dev
 
-# Copia solo lo necesario desde el builder
-COPY --from=builder /app /app
+# Copia los archivos necesarios desde la etapa de construcción
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server.js ./server.js
 
-# Expone el puerto del servidor
+# Exponer el puerto y definir el comando de inicio
 EXPOSE 5173
-
-# Comando de inicio
 CMD ["node", "server.js"]
