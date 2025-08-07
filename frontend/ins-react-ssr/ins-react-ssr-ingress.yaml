@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  generation: 1
+  name: ins-react-ssr-ing
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ins.ngo.k3s.lab.cautiva
+    http:
+      paths:
+      - backend:
+          service:
+            name: ins-react-ssr-svc
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

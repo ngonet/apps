@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ins-react-ssr
+  labels:
+    app: ins-react-ssr
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ins-react-ssr
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: ins-react-ssr
+        tier: frontend
+    spec:
+      containers:
+        - name: ins-react-ssr
+          image: ngoyarzo/ins-react-ssr:dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5173
+          env:
+            - name: NODE_ENV
+              value: "development"
+          envFrom:
+            - configMapRef:
+                name: ins-react-ssr-cm
+            - secretRef:
+                name: ins-react-ssr-secrets
+          command: ["node", "server.js"]
