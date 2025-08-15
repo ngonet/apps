@@ -1,0 +1,79 @@
+/// @namespace Person
+model Person {
+  id            String   @id @default(uuid())
+  rut           String   @unique
+  firstName     String   @map("first_name")
+  firstSurname  String   @map("first_surname")
+  secondSurname String   @map("second_surname")
+  address       String
+  commune       String   @map("commune_id")
+  phone         String?
+  cellphone     String?
+  email         String?  @unique
+  birthdate     DateTime
+  /// chilena, extranjera
+  nationality   String
+  /// Masculino. Femenino
+  sex           String
+  /// Casado, Separado, Soltero, Viudad, Conviviente, Divorsiado, Union Civil
+  civilStatus   String   @map("civil_status")
+  active        Boolean? @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updateAt      DateTime @updatedAt @map("update_at")
+
+  burden       Burden[]
+  /// @minItems 1
+  document     Document[]
+  /// @minItems 1
+  afpPerson    AfpPerson[]
+  /// @minItems 1
+  healthPerson HealthPerson[]
+
+  @@map("persons")
+}
+
+/// @namespace Person
+model Burden {
+  id            String   @id @default(uuid())
+  personId      String   @map("person_id")
+  person        Person   @relation(fields: [personId], references: [id])
+  rut           String   @unique
+  firstName     String   @map("first_name")
+  firstSurname  String   @map("first_surname")
+  secondSurname String   @map("second_surname")
+  birthdate     DateTime
+  /// chilena, extranjera
+  nationality   String
+  /// Masculino. Femenino
+  sex           String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updateAt      DateTime @updatedAt @map("update_at")
+
+  @@map("burdens")
+}
+
+/// @namespace Person
+model HealthPerson {
+  id        String   @id @default(uuid())
+  health    String   
+  personId  String   @unique @map("person_id")
+  person    Person   @relation(fields: [personId], references: [id])
+  planValue Decimal  @default(0.00) @map("plan_value")
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
+
+  @@map("healths_persons")
+}
+
+
+/// @namespace Person
+model AfpPerson {
+  id        String   @id @default(uuid())
+  afp       String   
+  personId  String   @unique @map("person_id")
+  person    Person   @relation(fields: [personId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
+
+  @@map("afps_persons")
+}

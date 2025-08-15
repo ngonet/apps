@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-client-svc
+  labels:
+    app: nodejs-client
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: nodejs-client
+    tier: backend
+  ports:
+    - port: 3001
+      targetPort: 3001

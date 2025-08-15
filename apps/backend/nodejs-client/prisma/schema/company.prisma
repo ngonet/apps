@@ -1,0 +1,82 @@
+/// @namespace Company
+model Company {
+  id        String   @id @default(uuid())
+  rut       String   @unique
+  name      String   @unique
+  address   String
+  commune   String   
+  phone     String?
+  email     String?
+  ccaf      String?   
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt @map("update_at")
+
+  /// @minItems 1
+  users          User[]
+  /// @minItems 1
+  representative Representative[]
+  /// @minItems 1
+  accounts       Account[]
+  /// @minItems 1
+  documents      Document[]
+  /// @minItems 1
+
+  @@map("companies")
+}
+
+/// @namespace Company
+// cambiar relacion con company
+model Representative {
+  id            String   @id @default(uuid())
+  companyId     String   @unique @map("company_id")
+  company       Company  @relation(fields: [companyId], references: [id])
+  rut           String   @unique
+  firstName     String   @map("first_name")
+  firstSurname  String   @map("first_surname")
+  secondSurname String   @map("second_surname")
+  phone         String?
+  cellphone     String?
+  email         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updateAt      DateTime @updatedAt @map("update_at")
+
+  @@map("representatives")
+}
+
+/// @namespace Company
+model User {
+  id        String  @id @default(uuid())
+  rut       String  @unique
+  name      String  @unique
+  password  String
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id])
+  roleId    String  @map("role_id")
+  role      Role    @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+/// @namespace Company
+model Role {
+  id   String @id @default(uuid())
+  name String
+
+  /// @minItems 1
+  users User[]
+
+  @@map("roles")
+}
+
+/// @namespace Company
+model Account {
+  id        String  @id @default(uuid())
+  name      String
+  number    BigInt
+  bank      String  
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id])
+
+  @@map("accounts")
+}
+

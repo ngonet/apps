@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-client
+  labels:
+    app: postgres-client
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-client
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: postgres-client
+        tier: database
+    spec:
+      containers:
+        - name: postgres-client
+          image: 'postgres:15'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: pgsql-cm-client
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-secret-client
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pgsql-storage-client
+      volumes:
+        - name: pgsql-storage-client
+          persistentVolumeClaim:
+            claimName: pgsql-pvc-client

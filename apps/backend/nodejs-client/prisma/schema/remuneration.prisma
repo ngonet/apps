@@ -1,0 +1,82 @@
+/// @namespace Remuneration
+model Remuneration {
+  id         String   @id @default(uuid())
+  date       DateTime @default(now())
+  documentId String   @map("document_id")
+  document   Document @relation(fields: [documentId], references: [id])
+  days       Int      @default(30)
+  extraHours Decimal  @default(0.00) @map("extra_hours")
+  netPayment Int?     @map("net_payment")
+  taxable    Int?
+  tributory  Int?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updateAt   DateTime @updatedAt @map("update_at")
+
+  /// @minItems 1
+  remunerationSalary   RemunerationSalary[]
+  /// @minItems 1
+  discountRemuneration DiscountRemuneration[]
+
+  @@map("remunerations")
+}
+
+/// @namespace Remuneration
+model Salary {
+  id           Int     @id @default(autoincrement())
+  code         Int     @unique
+  name         String  @unique
+  taxable      Boolean @default(true)
+  proportional Boolean @default(false)
+
+  /// @minItems 1
+  remunerationSalary RemunerationSalary[]
+  documentSalary     DocumentSalary[]
+  documentTypeSalary DocumentTypeSalary[]
+
+  @@map("salaries")
+}
+
+/// @namespace Remuneration
+model RemunerationSalary {
+  id             String       @id @default(uuid())
+  remunerationId String       @map("remuneration_id")
+  remuneration   Remuneration @relation(fields: [remunerationId], references: [id])
+  salaryId       Int          @map("salary_id")
+  salary         Salary       @relation(fields: [salaryId], references: [id])
+  value          Decimal      @default(0.00)
+  since          DateTime?
+  until          DateTime?
+
+  @@map("remunerations_salaries")
+}
+
+/// @namespace Remuneration
+model Discount {
+  id           Int     @id @default(autoincrement())
+  code         String  @unique
+  name         String  @unique
+  legal        Boolean @default(true)
+  proportional Boolean @default(false)
+
+  /// @minItems 1
+  discountRemuneration DiscountRemuneration[]
+  /// @minItems 1
+  discountDocument     DiscountDocument[]
+  discountDocumentType DiscountDocumentType[]
+
+  @@map("discounts")
+}
+
+/// @namespace Remuneration
+model DiscountRemuneration {
+  id             String       @id @default(uuid())
+  remunerationId String       @map("remuneration_id")
+  remuneration   Remuneration @relation(fields: [remunerationId], references: [id])
+  discountId     Int          @map("discount_id")
+  discount       Discount     @relation(fields: [discountId], references: [id])
+  value          Decimal      @default(0.00)
+  since          DateTime?
+  until          DateTime?
+
+  @@map("discounts_remunerations")
+}

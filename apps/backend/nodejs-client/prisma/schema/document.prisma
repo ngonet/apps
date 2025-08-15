@@ -1,0 +1,129 @@
+/// @namespace Document
+model DocumentType {
+  id       Int            @id @default(autoincrement())
+  code     String         @unique
+  name     String         @unique
+  parentId Int?           @map("parent_id")
+  parent   DocumentType?  @relation("DocumentTypeParent", fields: [parentId], references: [id])
+  child    DocumentType[] @relation("DocumentTypeParent")
+
+  /// @minItems 1
+  Document Document[]
+  DocumentTypeSalary DocumentTypeSalary[]
+  DiscountDocumentType DiscountDocumentType[]
+
+  @@map("document_types")
+}
+
+/// @namespace Document
+model Position {
+  id       Int        @id @default(autoincrement())
+  parentId Int?       @map("parent_id")
+  parent   Position?  @relation("PositionParent", fields: [parentId], references: [id])
+  child    Position[] @relation("PositionParent")
+  code     String     @unique
+  name     String     @unique
+
+  /// @minItems 1
+  DocumentPosition DocumentPosition[]
+
+  @@map("positions")
+}
+
+/// @namespace Document
+model Document {
+  id               String             @id @default(uuid())
+  parentId         String?            @map("parent_id")
+  parent           Document?          @relation("DocumentParent", fields: [parentId], references: [id])
+  status           Boolean?           @default(true)
+  documentTypeId   Int                @map("document_type_id")
+  documentType     DocumentType       @relation(fields: [documentTypeId], references: [id])
+  number           String             @unique
+  date             DateTime
+  endDate          DateTime?          @map("end_date")
+  companyId        String             @map("company_id")
+  company          Company            @relation(fields: [companyId], references: [id])
+  personId         String             @map("person_id")
+  person           Person             @relation(fields: [personId], references: [id])
+  salary           Int?               @default(0)
+  hours            Decimal            @default(0.0)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updateAt         DateTime           @updatedAt @map("update_at")
+  /// @minItems 1
+  child            Document[]         @relation("DocumentParent")
+  /// @minItems 1
+  documentPosition DocumentPosition[]
+  /// @minItems 1
+  remuneration     Remuneration[]
+  discountDocument DiscountDocument[]
+  documentSalary   DocumentSalary[]
+
+  @@map("documents")
+}
+
+/// @namespace Document
+model DocumentPosition {
+  id         String   @id @default(uuid())
+  documentId String   @map("document_id")
+  document   Document @relation(fields: [documentId], references: [id])
+  positionId Int      @map("position_id")
+  position   Position @relation(fields: [positionId], references: [id])
+
+  @@map("documents_positions")
+}
+
+/// @namespace Document
+model DocumentSalary {
+  id         String    @id @default(uuid())
+  documentId String    @map("document_id")
+  document   Document  @relation(fields: [documentId], references: [id])
+  salaryId   Int       @map("salary_id")
+  salary     Salary    @relation(fields: [salaryId], references: [id])
+  value      Decimal   @default(0.00)
+  since      DateTime?
+  until      DateTime?
+
+  @@map("documents_salaries")
+}
+
+/// @namespace Document
+model DiscountDocument {
+  id         String    @id @default(uuid())
+  documentId String    @map("document_id")
+  document   Document  @relation(fields: [documentId], references: [id])
+  discountId Int       @map("discount_id")
+  discount   Discount  @relation(fields: [discountId], references: [id])
+  value      Decimal   @default(0.00)
+  since      DateTime?
+  until      DateTime?
+
+  @@map("discounts_documents")
+}
+
+/// @namespace Document
+model DocumentTypeSalary {
+  id         String    @id @default(uuid())
+  documentTypeId Int    @map("document_type_id")
+  documentType   DocumentType  @relation(fields: [documentTypeId], references: [id])
+  salaryId   Int       @map("salary_id")
+  salary     Salary    @relation(fields: [salaryId], references: [id])
+  value      Decimal   @default(0.00)
+  since      DateTime?
+  until      DateTime?
+
+  @@map("document_types_salaries")
+}
+
+/// @namespace Document
+model DiscountDocumentType {
+  id         String    @id @default(uuid())
+  documentTypeId Int    @map("document_type_id")
+  documentType   DocumentType  @relation(fields: [documentTypeId], references: [id])
+  discountId Int       @map("discount_id")
+  discount   Discount  @relation(fields: [discountId], references: [id])
+  value      Decimal   @default(0.00)
+  since      DateTime?
+  until      DateTime?
+
+  @@map("discounts_document_types")
+}

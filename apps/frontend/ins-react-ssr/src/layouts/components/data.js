@@ -1,4 +1,27 @@
-import { TbAlertHexagon, TbBan, TbBellRinging, TbBoxAlignTop, TbCreditCard, TbFiles, TbHeadset, TbLayout, TbLayoutDashboard, TbLayoutNavbar, TbLayoutSidebar, TbLock, TbLockAccess, TbLogout2, TbRocket, TbSettings2, TbShieldLock, TbSitemap, TbStackFront, TbStar, TbUserCircle, TbUserHexagon } from 'react-icons/tb';
+import { TbAlertHexagon,
+  TbBan,
+  TbBellRinging,
+  TbBoxAlignTop,
+  TbCreditCard,
+  TbFiles,
+  TbHeadset,
+  TbLayout,
+  TbLayoutDashboard,
+  TbLayoutNavbar,
+  TbLayoutSidebar,
+  TbLock,
+  TbLockAccess,
+  TbLogout2,
+  TbRocket,
+  TbSettings2,
+  TbShieldLock,
+  TbSitemap,
+  TbStackFront,
+  TbStar,
+  TbUserCircle,
+  TbUserHexagon,
+  TbChartHistogram
+} from 'react-icons/tb';
 export const userDropdownItems = [{
   label: 'Welcome back!',
   isHeader: true
@@ -43,6 +66,16 @@ export const menuItems = [{
   label: 'Page',
   icon: TbFiles,
   url: '/page'
+}, {
+  key: 'indicator',
+  label: 'Indicadores',
+  icon: TbChartHistogram,
+  url: '/indicator'
+}, {
+  key: 'person',
+  label: 'Funcionarios',
+  icon: TbUserHexagon,
+  url: '/person'
 }, {
   key: 'dashboard',
   label: 'Dashboard',

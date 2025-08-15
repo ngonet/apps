@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgsql-cm-client
+  labels:
+    app: postgres-client
+    tier: database
+data:
+  POSTGRES_DB: sch-client
+  POSTGRES_USER: sch-client-usr

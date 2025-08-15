@@ -5,6 +5,12 @@ import MainLayout from '@/layouts/MainLayout';
 // Page
 const Page = lazy(() => import('@/views/page'));
 
+// Indicadores
+const Indicator = lazy(() => import('@/views/indicator'));
+
+// Funcionarios
+const Person = lazy(() => import('@/views/person'));
+
 // Dashboards
 const Dashboard = lazy(() => import('@/views/dashboards/dashboard'));
 
@@ -179,6 +185,14 @@ const pageRoutes = [{
   path: '/page',
   element: <Page />
 }];
+const indicatorRoutes = [{
+  path: '/indicator',
+  element: <Indicator />
+}];
+const personRoutes = [{
+  path: '/person',
+  element: <Person />
+}];
 const dashboardRoutes = [{
   path: '/dashboard',
   element: <Dashboard />
@@ -253,7 +267,7 @@ const allRoutes = [{
   children: [{
     path: '/',
     element: <Navigate to="/dashboard" replace />
-  }, ...dashboardRoutes, ...layoutRoutes, ...pageRoutes]
+  }, ...dashboardRoutes, ...layoutRoutes, ...pageRoutes, ...indicatorRoutes, ...personRoutes]
 }];
 const otherRoutes = [...authRoutes, ...errorRoutes, ...landingRoute, ...otherPagesRoutes];
 export const routes = [...allRoutes, ...otherRoutes];
