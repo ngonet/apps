@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: client-migrate-job
-  namespace: apps
 spec:
   template:
     spec:
